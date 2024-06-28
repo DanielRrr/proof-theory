@@ -1,0 +1,239 @@
+\documentclass[8pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsopn}
+\usepackage{comment}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{bussproofs}
+\usepackage[all, 2cell]{xy}
+\usepackage[all]{xy}
+\usepackage{rotating}
+\usepackage{lscape}
+\usepackage{minted}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+
+\theoremstyle{definition}
+\newtheorem{claim}{Claim}[section]
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}[section] 
+
+\theoremstyle{definition}
+\newtheorem{cons}{Construction}[section] 
+
+\theoremstyle{definition}
+\newtheorem{rem}{Remark}[section] 
+
+
+\theoremstyle{definition}
+\newtheorem{prop}{Proposition}[section]
+
+\theoremstyle{definition}
+\newtheorem{lemma}{Lemma}[section]
+
+\theoremstyle{definition}
+\newtheorem{fact}{Fact}[section]
+
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}[section]
+
+\theoremstyle{definition}
+\newtheorem{notation}{Notation}[section]
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{definition}
+\newtheorem{col}{Corollary}[section]
+
+\theoremstyle{question}
+\newtheorem{question}{Question}
+
+\let\strokeL\L
+\renewcommand\L{\mathbf{L}}
+
+\title{Some Notes on Proof Theory and Elements of Ordinal Analysis}
+\author{Daniel Rogozin}
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\section{Provable Recursion in ${\bf I}\Delta_0$}
+
+${\bf I}\Delta_0$ is a theory in first-order logic in the language:
+\begin{center}
+  $\{ =, 0, S, P, +, \dot{-}, \cdot, exp_2 \}$
+\end{center}
+where $S$ and $P$ are successor and precessor functions respectively.
+Further, we will denote $S(x)$ and $P(x)$ as $x + 1$ and $x \dot{-} 1$ respectively.
+$2^x$ stands for $exp_2(x)$.
+
+The non-logical axioms of ${\bf I}\Delta_0$ are the following list:
+
+\vspace{\baselineskip}
+
+\begin{minipage}{0.45\textwidth}
+  \begin{itemize}
+    \item $x + 1 \neq 0$
+    \item $0 \dot{-} 1 = 0$
+    \item $x + 0 = x$
+    \item $x \dot{-} 0 = x$
+    \item $x \cdot 0 = 0$
+    \item $2^0 = 1$
+  \end{itemize}
+\end{minipage}%
+\hfill
+\begin{minipage}{0.45\textwidth}
+  \begin{itemize}
+    \item $x + 1 = y + 1 \to x = y$
+    \item $(x + 1) \dot{-} 1 = x$
+    \item $x + (y + 1) = (x + y) + 1$
+    \item $x \dot{-} (y + 1) = x \dot{-} y \dot{-} 1$
+    \item $x \cdot (y + 1) = x \cdot y + x$
+    \item $2^{x + 1} = 2^x + 2^x$
+  \end{itemize}
+\end{minipage}
+
+\vspace{\baselineskip}
+
+along with the bounded induction scheme:
+\begin{center}
+  $B(0) \land \forall x (B (x) \to B(x + 1)) \to \forall x B(x)$
+\end{center}
+where $B$ is a \emph{$\Delta$-formula}, that is a formula one of the following forms (with bounded quantifiers only):
+\begin{itemize}
+  \item $B \eqcirc \forall x < t P(x) \equiv \forall x (x < t \to P(x))$ 
+  \item $B \eqcirc \exists x < t P(x) \equiv \exists x (x < t \land P(x))$
+\end{itemize}
+
+A $\Sigma_1$-formula is a formula of the form:
+\begin{center}
+  $\exists \vec{x} B(\vec{x})$
+\end{center}
+where $B(\vec{x}) \in \Delta_0$.
+
+\begin{lemma}
+  ${\bf I}\Delta_0$ proves (the universal closures of):
+  \begin{enumerate}
+    \item $x = 0 \lor x = (x \dot{-} 1) + 1$
+    \item $x + (y + z) = (x + y) + z$
+    \item $x \cdot (y \cdot z) = (x \cdot y) \cdot z$
+    \item $x \cdot (y + z) = x \cdot y + x \cdot z$
+    \item $x + y = y + x$
+    \item $x \cdot y = y \cdot x$
+    \item $x \dot{-} (y + z) = (x \dot{-} y) \dot{-} z$
+    \item $2^{x + y} = 2^x \cdot 2^y$
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+$ $
+
+  \begin{enumerate}
+    \item This is self-evident.
+    \item If $z = 0$, then $x + y = x + y$. If $z = z' + 1$, then, by applying the IH and the relevant axioms:
+    \begin{center}
+      $(x + (y + (z' + 1))) = (x + ((y + z') + 1)) = (x + (y + z')) + 1 = ((x + y) + z') + 1 = (x + y) + (z' + 1)$
+    \end{center}
+    \item If $z = 0$, then $x \cdot (y \cdot 0) = (x \cdot y) \cdot 0$. If $z = z' + 1$, then:
+    \begin{center}
+    $x \cdot (y \cdot (z' + 1)) = x \cdot (y \cdot z' + y) = x \cdot (y \cdot z') + x \cdot y =
+    (x \cdot y) \cdot z' + x \cdot y = (x \cdot y) \cdot (z' + 1)$
+    \end{center}
+    \item The rest of the cases are shown by induction on $z$. Consider the exponentiation law.
+    If $y = 0$, then
+
+    \begin{center}
+    $2^{x + 0} = 2^{x} = 0 + 2^{x} = 2^{x} \cdot 0 + 2^{x} = 2^{x} \cdot (0 + 1) = 2^x \cdot 2^0$
+    \end{center}
+
+    If $y = y' + 1$, then:
+    \begin{center}
+      $2^{x + (y' + 1)} = 2^{(x + y') + 1} = 2^x \cdot 2^y + 2^x \cdot 2^y = 2^{x} \cdot 2^{y + 1}$
+    \end{center}
+  \end{enumerate}
+\end{proof}
+
+\begin{lemma}
+  ${\bf I}\Delta_0$ proves (the universal closures of):
+
+  \begin{enumerate}
+    \item $\neg x < 0$
+    \item $x \leq 0 \leftrightarrow x = 0$
+    \item $0 \leq x$
+    \item $x \leq x$
+    \item $x < x + 1$
+    \item $x < y + 1 \leftrightarrow x \leq y$
+    \item $x \leq y \leftrightarrow x < y \lor x = y$ 
+    \item $x \leq y \land y \leq z \to x \leq z$
+    \item $x < y \land y < z \to x < z$
+    \item $x \leq y \lor y < x$
+    \item $x < y \to x + z < y + z$
+    \item $x < y \to x \cdot (z + 1) < y \cdot (z + 1)$
+    \item $x < 2^x$
+    \item $x < y \to 2^x < 2^y$
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  Straightforward induction.
+\end{proof}
+
+\begin{definition}
+  A function $f : \mathbb{N}^k \to \mathbb{N}$ is \emph{provably $\Sigma_1$} or \emph{provably recursive}
+  in an arithmetical theory if there is a $\Sigma_1$ formula $F(\vec{x}, y)$, a ``defining formula'' of $f$, such that:
+  \begin{enumerate}
+    \item $f(\vec{n}) = m$ iff $\omega \models f(\vec{n}) = m$
+    \item $T \vdash \exists y F(\vec{x}, y)$
+    \item $T \vdash F(\vec{x}, y) \land F(\vec{x}, y') \to y = y'$
+  \end{enumerate}
+\end{definition}
+If a defining formula $F \in \Delta_0$, then a function $f$ is \emph{provably bounded} 
+in $T$ if there is a term $t(\vec{x})$ such that $T \vdash F(\vec{x}, y) \to y < t(\vec{x})$.
+
+\begin{theorem}
+  Let $f$ be a provably recursive in $T$, then we can conservatively extend $T$
+  by adding a new function symbol $f$ along with the defining axiom $F(\vec{x}, f(\vec{x}))$.
+\end{theorem}
+
+\begin{proof}
+  
+\end{proof}
+
+\section{Primitive Recursion and ${\bf I}\Sigma_1$}
+
+${\bf I}\Sigma_1$ is an arithmetical theory where the induction scheme is
+restructed to $\Sigma_1$ formulas.
+
+\begin{lemma}
+  Every primitive recursion is provably recursive in ${\bf I}\Sigma_1$.
+\end{lemma}
+
+\begin{proof}
+  We have to show represent each primitive recursive function $f$ with a $\Sigma_1$ formula 
+  $F(\vec{x}, y) := \exists z C(\vec{x}, y, z)$ such that:
+  \begin{enumerate}
+    \item $f(\vec{n}) = m$ iff $\omega \models F(\vec{x}, y)$.
+    \item ${\bf I}\Sigma_1 \vdash \exists y F(\vec{x}, y)$.
+    \item ${\bf I}\Sigma_1 \vdash F(\vec{x}, y) \land F(\vec{x}, y') \to y = y'$.
+  \end{enumerate}
+
+
+\end{proof}
+
+
+\bibliographystyle{alpha}
+\bibliography{Text}
+
+\end{document}
