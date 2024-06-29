@@ -69,9 +69,9 @@
 
 \maketitle
 
-\section{Provable Recursion in ${\bf I}\Delta_0$}
+\section{Provable Recursion in ${\bf I}\Delta_0(\operatorname{exp})$}
 
-${\bf I}\Delta_0$ is a theory in first-order logic in the language:
+${\bf I}\Delta_0(\operatorname{exp})$ is a theory in first-order logic in the language:
 \begin{center}
   $\{ =, 0, S, P, +, \dot{-}, \cdot, exp_2 \}$
 \end{center}
@@ -79,7 +79,7 @@ where $S$ and $P$ are successor and precessor functions respectively.
 Further, we will denote $S(x)$ and $P(x)$ as $x + 1$ and $x \dot{-} 1$ respectively.
 $2^x$ stands for $exp_2(x)$.
 
-The non-logical axioms of ${\bf I}\Delta_0$ are the following list:
+The non-logical axioms of ${\bf I}\Delta_0(\operatorname{exp})$ are the following list:
 
 \vspace{\baselineskip}
 
@@ -124,7 +124,7 @@ A $\Sigma_1$-formula is a formula of the form:
 where $B(\vec{x}) \in \Delta_0$.
 
 \begin{lemma}
-  ${\bf I}\Delta_0$ proves (the universal closures of):
+  ${\bf I}\Delta_0(\operatorname{exp})$ proves (the universal closures of):
   \begin{enumerate}
     \item $x = 0 \lor x = (x \dot{-} 1) + 1$
     \item $x + (y + z) = (x + y) + z$
@@ -166,7 +166,7 @@ $ $
 \end{proof}
 
 \begin{lemma}
-  ${\bf I}\Delta_0$ proves (the universal closures of):
+  ${\bf I}\Delta_0(\operatorname{exp})$ proves (the universal closures of):
 
   \begin{enumerate}
     \item $\neg x < 0$
@@ -208,7 +208,126 @@ in $T$ if there is a term $t(\vec{x})$ such that $T \vdash F(\vec{x}, y) \to y <
 \end{theorem}
 
 \begin{proof}
+  Let $\mathcal{M} \models T$, $\mathcal{M}$ can be made into a model $(\mathcal{M}, f)$ where
+  we interpret $f$ as the function which is uniquely determined by the second and third conditions
+  of the definitions above.
+  Let $\varphi$ be a statement not involving $f$ such that $\varphi$ is true
+  in $(\mathcal{M}, f)$, so $\varphi$ is true in $\mathcal{M}$ as well.
+  By compactness $T$ proves $\varphi$.
+\end{proof}
+
+\begin{lemma}
+  Each term defines a provably bounded function of ${\bf I}\Delta_0(\operatorname{exp})$.
+\end{lemma}
+\begin{proof}
+  Let $f$ be a function defined by some ${\bf I}\Delta_0(\operatorname{exp})$-term $t$, 
+  that is, $f(\vec{x}) = t(\vec{x})$.
+  Take $y = t(\vec{x})$ as the defining formula for $f$ since 
+  $\exists y \: (y = t(\vec{x}))$ is derivable.
+  If $y' = t(\vec{x}) \land y = t(\vec{x})$, then $y = y'$ by transitivity.
+  A formula $y = t(\vec{x})$ is bounded and $y = t$ implies $y < t + 1$.
+  Thus $f$ is provably bounded.
+\end{proof}
+
+\begin{lemma}~\label{upper:bound:elem}
+  Define $2_k(x)$ as $2_0(x) = x$ and $2_{n + 1}(x) = 2^{2_n(x)}$. 
+  Then for every term $t(x_1, \dots, x_n)$ built up from the constants $0, S, P, +, \dot{-}, \cdot, exp_2$ there exists $k < \omega$ such that:
+  \begin{center}
+    ${\bf I}\Delta_0(\operatorname{exp}) \vdash t(x_1, \dots, x_n) < 2_k(\sum \limits_{k = 0}^n x_k)$
+  \end{center}
+\end{lemma}
+
+\begin{proof}
+Let $t$ be a term constructed from subterms $t_0$ and $t_1$ by using one of the function constants.
+Assume that inductively $t_0 < 2_{k_0}(s_0)$ and $t_1 < 2_{k_1}(s_1)$ are both provable for some $k_0, k_1 < \omega$, where
+$s_i$ is the sum of the variables of $t_i$ for $i = 0, 1$.
+
+Let $s$ be the sum of all variables appearing in either $t_0$ or $t_1$ and let $k = \max(k_0, k_1)$.
+Then one can prove $t_0 < 2_{k}(s)$ and $t_1 < 2_{k}(s)$. So one needs to show the following:
+\begin{enumerate}
+  \item $t_0 + 1 < 2_{k + 1}(s)$
+  \item $t_0 \dot{-} 1 < 2_{k}(s)$
+  \item $t_0 \dot{-} t_1 < 2_{k}(s)$
+  \item $t_0 \cdot t_1 < 2_{k}(s)$
+  \item $t_0 + t_1 < 2_{k}(s)$
+  \item $2^{t_0} < 2_{k}(s)$
+\end{enumerate}
+So ${\bf I}\Delta_0(\operatorname{exp}) \vdash t < 2_{k + 1}(s)$.
+\end{proof}
+
+\begin{lemma}
+  Let $f$ be a function defined by composition:
+  \begin{center}
+    $f(\vec{x}) = g_0(g_1(\vec{x}), \dots, g_m(\vec{x}))$
+  \end{center}
+  where $g_0, g_1, \dots, g_m$ are functions each of which is provably bounded in ${\bf I}\Delta_0(\operatorname{exp})$.
+  Then $f$ is provably bounded in ${\bf I}\Delta_0(\operatorname{exp})$.
+\end{lemma}
+
+\begin{proof}
+  Each $g_i$ has a defining formula $G_i$ and, by Lemma~\ref{upper:bound:elem}, there is a number $k_i < \omega$ such that:
+  \begin{center}
+    ${\bf I}\Delta_0(\operatorname{exp}) \vdash \exists y < 2_{k_i}(s) G_i (\vec{x}, y)$
+  \end{center}
+  where $s$ is the sum of elements of $\vec{x}$. And for $i = 0$ one has:
+  \begin{center}
+    ${\bf I}\Delta_0(\operatorname{exp}) \vdash \exists y < 2_{k_0}(s_0) G_0 (y_1, \dots, y_m, y)$
+  \end{center}
+  where $s_0$ is the sum of $y_1, \dots, y_m$.
+
+  Let $k = \max \{ k_i < \omega \: | \: i < m + 1 \}$ and let $F(\vec{x}, y)$ be the bounded formula:
+  \begin{center}
+    $\exists y_1 < 2_{k}(s) \dots \exists y_m < 2_{k}(s) C(\vec{x}, y_1, \dots, y_m, y)$
+  \end{center}
+  where $C(\vec{x}, y_1, \dots, y_m, y)$ is the conjunction:
+  \begin{center}
+    $G_1(\vec{x}, y_1) \land \dots \land G_m(\vec{x}, y_m) \land G_0 (y_1, \dots, y_m, y)$
+  \end{center}
+
+  $F$ is clearly a defining formula for $f$ such that ${\bf I}\Delta_0(\operatorname{exp}) \vdash \exists y F(\vec{x}, y)$.
+
+  Moreover, each $G_i$ is unique, so ${\bf I}\Delta_0(\operatorname{exp})$ also proves:
+
+  \vspace{\baselineskip}
+
+  $\begin{array}{lll}
+    & C(\vec{x}, y_1, \dots, y_m, y) \land C(\vec{x}, z_1, \dots, z_m, z) \to & \\
+    & \to \bigwedge \limits_{j = 1}^m y_j = z_j \land G_0(y_1, \dots, y_m, y) \land G_0(y_1, \dots, y_m, z) \to & \\
+    & \to y = z&
+  \end{array}$
+
+  \vspace{\baselineskip}
+
+  so we have (by first order logic):
+  \begin{center}
+    ${\bf I}\Delta_0(\operatorname{exp}) \vdash F(\vec{x}, y) \land F(\vec{x}, z) \to y = z$
+  \end{center}
+
+  Thus $f$ is provably $\Sigma_1$ in ${\bf I}\Delta_0(\operatorname{exp})$, so the rest is to find its bounding term.
+
+  ${\bf I}\Delta_0(\operatorname{exp})$ proves the following:
+
+  \begin{center}
+    $C(\vec{x}, y_1, \dots, y_m, y) \to \bigwedge \limits_{j = 1}^m y_j < 2_k(s) \land y < 2_k(y_1 + \dots + y_m)$
+  \end{center}
+
+  and
+
+  \begin{center}
+    $\bigwedge \limits_{j = 1}^m y_j < 2_k(s) \to y_1 + \dots + y_m < 2_k(s) \cdot m$
+  \end{center}
+
+  Put $t(\vec{x}) = 2_k(2_k(s) \cdot m)$, then we obtain
+
+  \begin{center}
+    ${\bf I}\Delta_0(\operatorname{exp}) \vdash C(\vec{x}, y_1, \dots, y_m, y) \to y < t(\vec{x})$
+  \end{center}
+
+  and so
   
+  \begin{center}
+    ${\bf I}\Delta_0(\operatorname{exp}) \vdash F(\vec{x}, y) \to y < t(\vec{x})$
+  \end{center}
 \end{proof}
 
 \section{Primitive Recursion and ${\bf I}\Sigma_1$}
