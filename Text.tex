@@ -324,11 +324,144 @@ So ${\bf I}\Delta_0(\operatorname{exp}) \vdash t < 2_{k + 1}(s)$.
   \end{center}
 
   and so
-  
+
   \begin{center}
     ${\bf I}\Delta_0(\operatorname{exp}) \vdash F(\vec{x}, y) \to y < t(\vec{x})$
   \end{center}
 \end{proof}
+
+\begin{lemma}
+  Suppose $f$ is defined by bounded minimisation
+  \begin{center}
+    $f(\vec{n}, m) = \mu_{k < m} (g(\vec{n}, k) = 0)$
+  \end{center}
+  from a function $g$ which is provably bounded in ${\bf I}\Delta_0(\operatorname{exp})$.
+  Then $f$ is provably bounded in ${\bf I}\Delta_0(\operatorname{exp})$.
+\end{lemma}
+
+\begin{proof}
+   Let $G$ be a defining formula for $g$. Let $F(\vec{x}, z, y)$ be the bounded formula
+   \begin{center}
+    $y \leq z \land \forall i < y \neg G(\vec{x}, i, 0) \land (y = z \lor G(\vec{x}, y, 0))$
+   \end{center}
+
+   $\omega \models F(\vec{n}, m, k)$ iff either $k$ is the least number less than $m$ such that $g(\vec{n}, k) = 0$ or 
+   there is no such and $k = m$. Thus it means that $k$ is the value of $f(\vec{n}, m)$, so $F$ is a defining formula for $f$.
+
+   Furthermore
+   \begin{center}
+   ${\bf I}\Delta_0(\operatorname{exp}) \vdash F(\vec{x}, z, y) \to y < z + 1$
+   \end{center}
+   so $t(\vec{x}, z) = z + 1$ can be taken as a bounding term for $f$.
+
+   We can prove:
+   \begin{center}
+    $F(\vec{x}, z, y) \land F(\vec{x}, z, y') \land y < y' \to G(\vec{x}, y, 0) \land \neg G(\vec{x}, y, 0)$
+   \end{center}
+   and similarly for interchanged $y$ and $y'$. So we can prove:
+   \begin{center}
+    $F(\vec{x}, z, y) \land F(\vec{x}, z, y') \to \neg y < y' \land \neg y' < y$
+   \end{center}
+   As far as $y < y' \lor y' < y \lor y = y'$, we have
+   \begin{center}
+    $F(\vec{x}, z, y) \land F(\vec{x}, z, y') \to y = y'$
+   \end{center}
+
+   Now we have to check that ${\bf I}\Delta_0(\operatorname{exp}) \vdash \exists y F(\vec{x}, z, y)$.
+   We construct such $y$ by bounded induction on $z$.
+
+   \begin{enumerate}
+    \item $z = 0$.
+
+    $F(\vec{x}, 0, 0)$ is provable since $y = 0 \leftrightarrow y \leq 0$ and $\neg i < 0$. 
+    So ${\bf I}\Delta_0(\operatorname{exp}) \vdash F(\vec{x}, 0, y)$ is provable.
+    \item Assume $\exists y F(\vec{x}, z, y)$ is provable, let show that that $\exists y F(\vec{x}, z + 1, y)$ is provable.
+
+    We can show $y \leq z \to y + 1 \leq z + 1$ and, via $i < y + 1 \leftrightarrow i < y \lor i = y$,
+    \begin{center}
+      $\forall i < y \: \neg G(\vec{x}, i, 0) \land ((y = z) \land \neg G(\vec{x}, y, 0)) \to \forall i < y + 1 \: \neg G(\vec{x}, i, 0) \land y + 1 = z + 1$
+    \end{center}
+    Therefore
+    \begin{center}
+    $F(\vec{x}, z, y) \to F(\vec{x}, z + 1, y + 1) \lor F(\vec{x}, z + 1, y)$
+    \end{center}
+    and thus:
+    \begin{center}
+      $\exists y F(\vec{x}, z, y) \to \exists y F(\vec{x}, z + 1, y)$
+    \end{center}
+   \end{enumerate}
+\end{proof}
+
+\begin{theorem}
+  Every elementary function is provably bounded in ${\bf I}\Delta_0(\operatorname{exp})$.
+\end{theorem}
+
+\begin{proof}
+  As we know from recursion theory, the class of elementary functions can be characterised
+  as those functions which are definable from $0$, $S$, $P$, $\cdot$, $+$, $exp_2$, $\dot{-}$ and $\cdot$
+  by composition and minimisation. And then we apply above lemmas.
+\end{proof}
+
+\subsection{Proof-theoretic Characterisation}
+
+For this section we shall be using a Tait-style formalisation of ${\bf I}\Delta_0(\operatorname{exp})$.
+We have the following logical rules:
+
+\vspace{\baselineskip}
+
+\begin{prooftree}
+  \AxiomC{$ $}
+  \RightLabel{{\bf Ax}}
+  \UnaryInfC{$\Gamma, R\vec{t}, \neg R\vec{t}$}
+\end{prooftree}
+\begin{minipage}{0.45\textwidth}
+  \begin{prooftree}
+    \AxiomC{$\Gamma, A_0, A_1$}
+    \RightLabel{$\vee$}
+    \UnaryInfC{$\Gamma, A_0 \vee A_1$}
+  \end{prooftree}
+
+  \begin{prooftree}
+    \AxiomC{$\Gamma, A(t)$}
+    \RightLabel{$\exists$}
+    \UnaryInfC{$\Gamma, \exists x A(x)$}
+  \end{prooftree}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+  \begin{prooftree}
+    \AxiomC{$\Gamma, A_0$}
+    \AxiomC{$\Gamma, A_1$}
+    \RightLabel{$\land$}
+    \BinaryInfC{$\Gamma, A_0 \land A_1$}
+  \end{prooftree}
+
+  \begin{prooftree}
+    \AxiomC{$\Gamma, A$}
+    \RightLabel{$\forall$}
+    \UnaryInfC{$\Gamma, \forall x A$}
+  \end{prooftree}
+\end{minipage}
+
+\vspace{\baselineskip}
+
+where $R\vec{t}$ is an atomic formula and $x$ is not free in $A$ in the $\forall$ rule.
+Here $\Gamma$ stores all non-logical axioms of ${\bf I}\Delta_0(\exp)$ along with its negations.
+We also have the bounded induction rule:
+  \begin{prooftree}
+    \AxiomC{$\Gamma, B(0)$}
+    \AxiomC{$\Gamma, \neg B(n), B(n + 1)$}
+    \BinaryInfC{$\Gamma, B(t)$}
+  \end{prooftree}
+where $B$ is a bounded formula and $t$ is any term. 
+
+Of course, the cut rule is admissible:
+  \begin{prooftree}
+    \AxiomC{$\Gamma, A$}
+    \AxiomC{$\Gamma, \neg A$}
+    \RightLabel{${\bf cut}$}
+    \BinaryInfC{$\Gamma$}
+  \end{prooftree}
 
 \section{Primitive Recursion and ${\bf I}\Sigma_1$}
 
@@ -347,7 +480,6 @@ restructed to $\Sigma_1$ formulas.
     \item ${\bf I}\Sigma_1 \vdash \exists y F(\vec{x}, y)$.
     \item ${\bf I}\Sigma_1 \vdash F(\vec{x}, y) \land F(\vec{x}, y') \to y = y'$.
   \end{enumerate}
-
 
 \end{proof}
 
