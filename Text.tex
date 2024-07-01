@@ -267,17 +267,17 @@ So ${\bf I}\Delta_0(\operatorname{exp}) \vdash t < 2_{k + 1}(s)$.
 \begin{proof}
   Each $g_i$ has a defining formula $G_i$ and, by Lemma~\ref{upper:bound:elem}, there is a number $k_i < \omega$ such that:
   \begin{center}
-    ${\bf I}\Delta_0(\operatorname{exp}) \vdash \exists y < 2_{k_i}(s) G_i (\vec{x}, y)$
+    ${\bf I}\Delta_0(\operatorname{exp}) \vdash \exists y < 2_{k_i}(s) \: G_i (\vec{x}, y)$
   \end{center}
   where $s$ is the sum of elements of $\vec{x}$. And for $i = 0$ one has:
   \begin{center}
-    ${\bf I}\Delta_0(\operatorname{exp}) \vdash \exists y < 2_{k_0}(s_0) G_0 (y_1, \dots, y_m, y)$
+    ${\bf I}\Delta_0(\operatorname{exp}) \vdash \exists y < 2_{k_0}(s_0) \: G_0 (y_1, \dots, y_m, y)$
   \end{center}
   where $s_0$ is the sum of $y_1, \dots, y_m$.
 
   Let $k = \max \{ k_i < \omega \: | \: i < m + 1 \}$ and let $F(\vec{x}, y)$ be the bounded formula:
   \begin{center}
-    $\exists y_1 < 2_{k}(s) \dots \exists y_m < 2_{k}(s) C(\vec{x}, y_1, \dots, y_m, y)$
+    $\exists y_1 < 2_{k}(s) \: \dots \: \exists y_m < 2_{k}(s) \: C(\vec{x}, y_1, \dots, y_m, y)$
   \end{center}
   where $C(\vec{x}, y_1, \dots, y_m, y)$ is the conjunction:
   \begin{center}
@@ -451,6 +451,7 @@ We also have the bounded induction rule:
   \begin{prooftree}
     \AxiomC{$\Gamma, B(0)$}
     \AxiomC{$\Gamma, \neg B(n), B(n + 1)$}
+    \RightLabel{${\bf BInd}$}
     \BinaryInfC{$\Gamma, B(t)$}
   \end{prooftree}
 where $B$ is a bounded formula and $t$ is any term. 
@@ -462,6 +463,104 @@ Of course, the cut rule is admissible:
     \RightLabel{${\bf cut}$}
     \BinaryInfC{$\Gamma$}
   \end{prooftree}
+
+
+\begin{definition}
+  Let $\exists \vec{z} B(\vec{z})$ be a closed $\Sigma_1$-formula, then it is \emph{true at $m$}, written as 
+  $m \models \exists \vec{z} B(\vec{z})$, if there exist natural numbers $m_1, \dots, m_l$ such that each 
+  $m_i < m$ and $B(\vec{m})$ is true in the standard model.
+
+  A finite set $\Gamma$ of closed $\Sigma_1$-formulas is true at $m$, written as $m \models \Gamma$ if at least one of them is true at $m$.
+\end{definition}
+
+If $\Gamma(x_1, \dots, x_k)$ is a finite set of $\Sigma_1$-formulas whose free variables occur amongst $x_1, \dots, x_k$.
+Let $f : \mathbb{N}^{k} \to \mathbb{N}$, then $f \models \Gamma(x_1, \dots, x_k)$ we have $f(\vec{n}) \models \Gamma(x_1 := n_1, \dots, x_k := n_k)$
+for each $\vec{n} = (n_1, \dots, n_k)$.
+
+\begin{fact} {\bf (Persistence)}
+
+  \begin{enumerate}
+    \item If $m \leq m'$, then $m \models \exists \vec{z} B(\vec{z})$ implies $m' \models \exists \vec{z} B(\vec{z})$.
+    \item If $\forall \vec{n} \in \mathbb{N}^{k}$ $f(\vec{n}) \leq f'(\vec{n})$, 
+    then $f(\vec{n}) \models \Gamma(x_1 := n_1, \dots, x_k := n_k)$ implies $f'(\vec{n}) \models \Gamma(x_1 := n_1, \dots, x_k := n_k)$.
+  \end{enumerate}
+\end{fact}
+
+\begin{lemma}
+  Let $\Gamma(\vec{x})$ be a finite set of $\Sigma_1$ formulas such that 
+  \begin{center}
+  ${\bf I}\Delta_0(exp) \vdash \bigvee \limits_{\gamma(\vec{x}) \in \Gamma(\vec{x})} \gamma(\vec{x})$.
+  \end{center}
+  Then there is an elementary function $f$ such that $f \models \Gamma(\vec{x})$ and $f$ is strongly increasing on its variables.
+\end{lemma}
+
+\begin{proof}
+
+  If $\Gamma$ is provable in ${\bf I}\Delta_0(exp)$, 
+  then it is provable in the Tait-style version of ${\bf I}\Delta_0(exp)$, where all cut formulas are $\Sigma_1$.
+
+  If $\Gamma$ is classically derivable from non-logical axioms $A_1, \dots, A_s$, then there is a cut-free proof
+  in the Tait calculus of $\neg A_1, \Delta, \Gamma$, where $\Delta = \neg A_2, \dots, \neg A_s$. Let us show how to cancel $\neg A_1$ using a $\Sigma_1$-cut.
+
+  If $A_1$ is an induction axiom on some formula $B$, then we have a cut-free proof of:
+  \begin{center}
+    $B(0) \land \forall y (\neg B(y) \lor B(y + 1)) \land \exists x \neg B(x), \Delta, \Gamma$
+  \end{center}
+
+  Thus we also have cut-free proofs of $B(0), \Delta, \Gamma$, $\neg B(y), B(y + 1), \Delta, \Gamma$
+  and $\exists x \neg B(x), \Delta, \Gamma$. So we have
+  \begin{prooftree}
+    \AxiomC{$\Delta, \Gamma, B(0)$}
+    \AxiomC{$\Delta, \Gamma, \neg B(y), B(y + 1)$}
+    \RightLabel{${\bf BInd}$}
+    \BinaryInfC{$\Delta, \Gamma, B(x)$}
+    \RightLabel{$\forall$}
+    \UnaryInfC{$\Delta, \Gamma, \forall x B(x)$}
+    \AxiomC{$\exists x \neg B(x), \Delta, \Gamma$}
+    \RightLabel{$\Sigma_1$-{\bf cut}}
+    \BinaryInfC{$\Delta, \Gamma$}
+  \end{prooftree}
+
+  We can similarly cancel each of $\neg A_2, \dots, \neg A_s$ and so obtain the proof of $\Gamma$ with $\Sigma_1$-cuts only.
+
+  Now we choose a proof of $\Gamma(\vec{x})$ and proceed by induction on the height of the proof and determine
+  an elementary function $f$ such that $f \models \Gamma$.
+
+  \begin{enumerate}
+    \item If $\Gamma(\vec{x})$ is an axiom, then for all $\vec{n}$ $\Gamma(\vec{n})$ contains a true atom.
+    So for any $f$ $f \models \Gamma$. Let us choose $f(\vec{n}) = n_1 + \dots + n_k$.
+    \item If $\Gamma, B_0 \vee B_1$ is derivable, so is $\Gamma, B_0, B_1$. Note that $B_0$ and $B_1$ are both bounded.
+    Let $f \models \Gamma, B_0, B_1$, then $f \models \Gamma, B_0 \vee B_1$.
+    \item Assume $\Gamma, B_0 \land B_1$ is derivable, then $\Gamma, B_0$ and $\Gamma, B_1$
+    By the induction hypothesis we have $f_0 \models \Gamma, B_0$ and $f_1 \models \Gamma, B_1$, so, by persistence,
+    we have $\lambda \vec{n}. f_0(\vec{n}) + f_1(\vec{n}) \models \Gamma, B_0 \land B_1$.
+    \item Assume $\Gamma, \forall y B(y)$ is derivable, then $\Gamma, B(y)$ is derivable and $y$ is not free in $\Gamma$.
+    Since all the formulas are $\Sigma_1$, $\forall x B(y)$ must be bounded, so $B(y) \eqcirc \neg (y < t) \lor B'(y)$ for some
+    term $t$ and for some bounded formula $B'$.
+    By the induction hypothesis, assume $f_0 \models \Gamma, \neg (y < t), B'(y)$ for some increasing elementary function $f_0$.
+    Then we have:
+    \begin{center}
+      $f_0(\vec{n}, k) \models \Gamma(\vec{n}), \neg (k < t(\vec{n})), B'(\vec{n}, k)$
+    \end{center}
+    Let $g$ be an increasing elementary function bounding $t$, define
+    \begin{center}
+      $f(\vec{n}) = \sum \limits_{k < g(\vec{n})} f(\vec{n}, k)$
+    \end{center}
+    We have either $f(\vec{n}) \models \Gamma(\vec{n})$ or, by persistence, $B'(\vec{n}, k)$ is true for every $k < t(\vec{n})$.
+    So $f \models \Gamma, \forall y B(y)$ and $f$ is elementary.
+    \item Assume $\Gamma, \exists y A(y, \vec{x})$ is derivable, so $\Gamma, A(t, \vec{x})$ is derivable for some term $t$.
+    By the IH, there is elementary $f_0$ such that for all $\vec{n}$ one has
+    \begin{center}
+      $f_0(\vec{n}) \models \Gamma(\vec{n}), A(t(\vec{n}), \vec{n})$
+    \end{center}
+    Then either $f_0(\vec{n}) \models \Gamma(\vec{n})$ or else $f_0(\vec{n})$ bounds true witnesses for all
+    existential quantifiers in $A(t(\vec{n}), \vec{n})$. Choose an elementary function $g$ which is bounding for $t$.
+    Define $f(\vec{n}) = f_0(\vec{n}) + g(\vec{n})$, then for all $\vec{n}$ either 
+    $f(\vec{n}) \models \Gamma(\vec{n})$ or $f(\vec{n}) \models \exists y A(y, \vec{n})$.
+    \item TODO
+    \item TODO
+  \end{enumerate}
+\end{proof}
 
 \section{Primitive Recursion and ${\bf I}\Sigma_1$}
 
