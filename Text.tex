@@ -392,7 +392,7 @@ So ${\bf I}\Delta_0(\operatorname{exp}) \vdash t < 2_{k + 1}(s)$.
    \end{enumerate}
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}~\label{provablysigma1:1}
   Every elementary function is provably bounded in ${\bf I}\Delta_0(\operatorname{exp})$.
 \end{theorem}
 
@@ -486,7 +486,7 @@ for each $\vec{n} = (n_1, \dots, n_k)$.
   \end{enumerate}
 \end{fact}
 
-\begin{lemma}
+\begin{lemma}~\label{truth:idelta0}
   Let $\Gamma(\vec{x})$ be a finite set of $\Sigma_1$ formulas such that 
   \begin{center}
   ${\bf I}\Delta_0(exp) \vdash \bigvee \limits_{\gamma(\vec{x}) \in \Gamma(\vec{x})} \gamma(\vec{x})$.
@@ -557,9 +557,89 @@ for each $\vec{n} = (n_1, \dots, n_k)$.
     existential quantifiers in $A(t(\vec{n}), \vec{n})$. Choose an elementary function $g$ which is bounding for $t$.
     Define $f(\vec{n}) = f_0(\vec{n}) + g(\vec{n})$, then for all $\vec{n}$ either 
     $f(\vec{n}) \models \Gamma(\vec{n})$ or $f(\vec{n}) \models \exists y A(y, \vec{n})$.
-    \item TODO
-    \item TODO
+    \item Assume $\Gamma$ comes about by the cut rule with $\Sigma_1$ formula 
+    $C \eqcirc \exists \vec{z} B(\vec{z})$, so the premises are
+    $\Gamma, \forall \vec{z} \neg B(\vec{z})$ and $\Gamma, \exists \vec{z} B(\vec{z})$.
+
+    Without increasing the height of a proof, we can invert all universal quantifiers
+    in the first premise. So we have $\neg B(\vec{z})$. $B$ is bounded, so the induction hypothesis
+    can be applied to this formula to obtain an elementary function $f_0$ such that, 
+    for all assignments $[\vec{x} := \vec{n}]$ and $[\vec{z} := \vec{m}]$
+    \begin{center}
+      $f_0(\vec{n}, \vec{m}) \models \Gamma(\vec{n}), \neg B(\vec{n}, \vec{m})$
+    \end{center}
+    Now we apply the induction hypothesis to the second premise of the cut rule, so we have an elementary function
+    $f_1$ such that for all $\vec{n}$ either 
+    $f_1(\vec{n}) \models \Gamma(\vec{n})$ or there are fixed witnesses $\vec{m} < f_1(\vec{n})$
+    such that $B(\vec{n}, \vec{m})$ is true.
+
+    Define $f$ the following way:
+    \begin{center}
+      $f(\vec{n}) = f_0(\vec{n}, f_1(\vec{n}), \dots, f_1(\vec{n}))$
+    \end{center}
+    Furthermore $f \models \Gamma$. For otherwise there would be a tuple $\vec{n}$ such that
+    $\Gamma(\vec{n})$ is not true at $f(\vec{n})$, so, by persistence, 
+    $\Gamma(\vec{n})$ is not true at $f_1(\vec{n})$.
+    Thus $B(\vec{n}, \vec{m})$ is true for particular numbers $\vec{m} < f_1(\vec{n})$.
+    But then $f_0(\vec{n}, \vec{m}) < f(\vec{n})$, so, by persistence, $\Gamma(\vec{n})$ cannot be true at 
+    $f_0(\vec{n}, \vec{m})$. Thus $B(\vec{n}, \vec{m})$ is false, so we have a contradiction.
+    \item Finally suppose $\Gamma(\vec{x}), B(\vec{x}, t)$ comes from the induction rule on a bounded formula $B$.
+    The premises of the rule $\Gamma(\vec{x}), B(\vec{x}, 0)$ and $\Gamma(\vec{x}), \neg B(\vec{x}, y), B(\vec{x}, y + 1)$.
+
+    Let us apply the induction hypothesis to each of the premises, and then we obtain
+    increasing elementary functions $f_0$ and $f_1$ such that for all $\vec{n}$ and for all $k$
+
+    \begin{center}
+      $f_0(\vec{n}) \models \Gamma(\vec{n}), B(\vec{n}, 0)$
+
+      $f_1(\vec{n}, k) \models \Gamma(\vec{n}), \neg B(\vec{n}, k), B(\vec{n}, k + 1)$
+    \end{center}
+
+    Now let
+    \begin{center}
+      $f(\vec{n}) = f_0(\vec{n}) + \sum \limits_{k < g(\vec{n})} f_1(\vec{n}, k)$
+    \end{center}
+    where $g$ is an increasing elementary function which is bounding for the term $t$.
+    $f$ is elementary and increasing, and, by persistence for $f_0$ and $f_1$, we have either
+    $f(\vec{n}) \models \Gamma(\vec{n})$ or else
+    $B(\vec{n}, 0)$ and $B(\vec{n}, k) \to B(\vec{n}, k + 1)$ are true for all $k < t(\vec{n})$.
+    In either case, we have $f \models \Gamma(\vec{x}), B(\vec{x}, t(\vec{x}))$.
   \end{enumerate}
+\end{proof}
+
+\begin{theorem}
+  A number-theoretic function is elementary iff $f$ is provably $\Sigma_1$ in ${\bf I}\Delta_0(exp)$.
+\end{theorem}
+
+\begin{proof}
+  The only if part is in Theorem~\ref{provablysigma1:1}, so we show the if part only.
+  Assume $f$ is provably $\Sigma_1$ in ${\bf I}\Delta_0(exp)$. Then we have a formula
+  \begin{center}
+    $F(\vec{x}, y) = \exists z_1 \dots \exists z_k B(\vec{x}, y, z_1, \dots, z_k)$
+  \end{center}
+  which defines $f$ and such that
+  \begin{center}
+  ${\bf I}\Delta_0(exp) \models \exists y F(\vec{x}, y)$
+  \end{center}
+  By Lemma~\ref{truth:idelta0}, there exists an elementary function $g$ such that for every
+  tuple of arguments $\vec{n}$ there are numbers $m_0, \dots, m_k$
+  less that $g(n)$ satisfying the bounded formula $B(\vec{n}, m_0, m_1, \dots, m_k)$.
+  Apply the elementary sequence coding:
+  \begin{center}
+    $h(\vec{n}) = \langle g(\vec{n}), g(\vec{n}), \dots, g(\vec{n})\rangle$
+  \end{center}
+  so that if $m = \langle m_0, m_1, \dots, m_k \rangle$
+  where $m_i < g(\vec{n})$ for each $i \in n + 1$, so $m < h(\vec{n})$.
+
+  As far as $f(\vec{n})$ is the unique $m_0$ for which there are $m_1, \dots, m_k$ satisfying
+  $B(\vec{n}, m_0, \dots, m_k)$, we define $f$ as:
+  \begin{center}
+    $f(\vec{n}) = (\mu_{m < h(\vec{n})} B(\vec{n}, (m)_0, (m)_1, \dots, (m)_k))_0$.
+  \end{center}
+
+  $B$ is a bounded formula of ${\bf I}\Delta_0(exp)$, $B$ is elementarily 
+  decidable. Moreover, elementary functions are closed under composition and bounded minimisation,
+  so $f$ is elementary.
 \end{proof}
 
 \section{Primitive Recursion and ${\bf I}\Sigma_1$}
