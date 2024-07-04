@@ -660,6 +660,72 @@ restructed to $\Sigma_1$ formulas.
     \item ${\bf I}\Sigma_1 \vdash F(\vec{x}, y) \land F(\vec{x}, y') \to y = y'$.
   \end{enumerate}
 
+  In each case $C(\vec{x}, y, z)$ will be a $\Delta_0(exp)$-formula
+  constructed via sequence encoding in ${\bf I}\Delta_0(exp)$.
+  Such a formula expresses that $z$ is a uniquely determined sequence number encoding the computation of
+  $f(\vec{x}) = y$ and containing the output value $y$ as its final element, so $y = \pi_2(z)$.
+
+  Condition 1 will hold by the definition of $C$. 
+  Condition 3 will be satisfied by the uniqueness of $z$. We consider five definitional schemes by which $f$ could be
+  introduced:
+  \begin{enumerate}
+    \item $f$ is the constant-zero function, that is, $f(x) = 0$, no matter what $x$ is.
+    Then we take $C := y = 0 \land z = \langle 0 \rangle$. All the conditions are obviously satisfied.
+    \item If $f$ is the successor function $f(x) = x + 1$, we let
+    \begin{center}
+      $C(x,y,z) := y = x + 1 \land z = \langle x + 1 \rangle$
+    \end{center}
+    All the conditions are obvious.
+    \item Now assume $f$ is the projection function $f(x_0, \dots, x_n) = x_i$ for some $i \in n + 1$.
+    We let
+    \begin{center}
+      $C(\vec{x},y,z) := y = x_i \land z = \langle x_i \rangle$
+    \end{center}
+    \item Now assume $f$ is defined by substitution from previously generated primitive recursive functions $f_0, f_1, f_2$:
+    \begin{center}
+      $f(\vec{x}) = f_0(f_1(\vec{x}), f_2(\vec{x}))$
+    \end{center}
+
+    By the induction hypothesis, assume thatb $f_0, f_1, f_2$ are provably recursive and we have 
+    $\Delta_0(exp)$-formulas $C_0, C_1, C_2$ encoding their computations ($\operatorname{len}(z) = 4$).
+    For the function $f$ define:
+    \begin{center}
+      $C(\vec{x}, y, z) := \bigwedge \limits_{i \in \{ 1, 2\}} C_i(\vec{x}, \pi_2((z)_i), (z)_i) \land 
+      C_0(\pi_2((z)_1), \pi_2((z)_2), y, (z)_0) \land (z)_3 = y$.
+    \end{center}
+
+    Let us check the required conditions:
+    \begin{enumerate}
+      \item Condition 1 holds since $f(\vec{n}) = m$ iff there are numbers $m_1$ and $m_2$ such that
+      $f_1(\vec{n}) = m_1$, $f_2(\vec{n}) = m_2$ and $f_0(m_1, m_2) = m$.
+      These hold if and only if there are number $k_1, k_2, k_0$ such that 
+      $C_1(\vec{n}, m_1, k_1)$, $C_2(\vec{n}, m_2, k_2)$ and $C_0(m_1, m_2, m, k_0)$ are all true.
+      And these hold if and only if $C(\vec{n}, m, \langle k_0, k_1, k_2, m \rangle)$ is true.
+      Thus $f(\vec{n}) = m $ iff and only if $F(\vec{n}, m) = \exists z C(\vec{n}, m, z)$ is true.
+      \item Condition 2 holds since from $C_1(\vec{x}, y_1, z_1)$, $C_2(\vec{x}, y_2, z_2)$
+      and $C(y_1, y_2, y, z_0)$ we can derive 
+      $C(\vec{x}, y, \langle z_0, z_1, z_2, y \rangle)$ in ${\bf I}\Delta_0$.
+      So provided $\exists y \exists z C_1(\vec{x}, y, z)$, $\exists y \exists z C_2(\vec{x}, y, z)$ and
+      $\forall y_1 \forall y_2 \exists y \exists z C(y_1, y_2, y, z)$, we can prove $\exists y F(\vec{x}, y) := 
+      C(\vec{x}, y, z)$.
+      \item Condition 3 is self-evident.
+    \end{enumerate}
+    \item Now assume that $f$ is defined from $f_1$ and $f_2$ by primitive recursion:
+    \begin{center}
+      $f(\vec{v}, 0) = f_0(\vec{v})$
+
+      $f(\vec{v}, x + 1) = f_1(\vec{v}, x, f(\vec{v}, x))$
+    \end{center}
+    By the induction hypothesis $f_0$ and $f_1$ are provably recursive and they have associated $\Delta_0$-formulas
+    $C_0$ and $C_1$. Define
+    \begin{center}
+    $\begin{array}{lll}
+      & C(\vec{v}, x, y, z) := C_0(\vec{v}, \pi_2((z)_0), (z)_0) \land & \\
+      & \:\:\:\: \forall i < x \:\: (C_i (\vec{v}, i, \pi_2((z)_i), \pi_2((z)_{i + 1}))) \land & \\
+      & \:\:\:\: (z)_{x + 1} = y \land \pi_2((z)_x) = y &
+    \end{array}$
+  \end{center}
+  \end{enumerate}
 \end{proof}
 
 \section{$\epsilon_0$ and Peano Arithmetic}
