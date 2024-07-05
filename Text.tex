@@ -725,8 +725,91 @@ restructed to $\Sigma_1$ formulas.
       & \:\:\:\: (z)_{x + 1} = y \land \pi_2((z)_x) = y &
     \end{array}$
   \end{center}
+
+  Let us check that all the conditions are satisfied:
+  \begin{enumerate}
+    \item Condition 1 holds since $f(\vec{l}, n) = m$ if and only if there is a sequence number
+    $k = \langle k_0, \dots, k_n, m \rangle$ such that $k_0$ encodes the computation of 
+    $f(\vec{l}, 0)$ with the value $\pi_2(k_0)$, and for each $i < n$, 
+    $k_{i + 1}$ codes the computation of $f(\vec{l}, i + 1) = f_1(\vec{l}, i, \pi_2(k_i))$
+    with values $\pi_2(k_{i + 1})$ and $\pi_2(k_n) = m$.
+    This is equivalent to $\models F(\vec{l}, n, m) \leftrightarrow \exists z C(\vec{l}, n,m, z)$.
+    \item To show Condition 2 we have to prove the following in ${\bf I}\Delta_0$
+    \begin{center}
+      $C_0(\vec{v}, y, z) \to C(\vec{v}, 0, y, \langle z, y \rangle)$
+    \end{center}
+    and
+    \begin{center}
+      $C(\vec{v}, x, y, z) \land C_1(\vec{v}, x, y,y',z') \to C(\vec{v}, x + 1, y', t)$
+    \end{center}
+    for a suitable term $t$ which removes the end component $y$ of $z$ and replaces it by $z'$, 
+    and then adds the final component $y'$. More specifically
+    \begin{center}
+      $t = \pi(\pi(\pi_1(z), z'), y')$
+    \end{center}
+    Hence from $\exists y \exists z C_0(\vec{v},y,z)$ we obtain 
+    $\exists y \exists z C(\vec{v}, 0, y, z)$, and from $\forall y \exists y' \exists z' C_1(\vec{v}, x, y, y', z')$ one can derive
+    \begin{center}
+      $\exists y \exists z C(\vec{v}, x,y,z) \to \exists y \exists z C(\vec{v}, x + 1, y, z)$
+    \end{center}
+    We have assumed that $f_0$ and $f_1$ are primitive recursive, we can prove $\exists y F(\vec{v}, 0, y)$
+    and $\exists y F(\vec{v}, x, y) \to \exists y F(\vec{v}, x + 1, y)$.
+    Then we derive $\exists y F(\vec{v}, x, y)$ by using $\Sigma_1$-induction.
+    \item To show Condition 3 assume $C(\vec{v}, x, y, z)$ and $C(\vec{v}, x, y',z')$, where
+    $z$ and $z'$ are sequence numbers of the same length $x + 2$.
+    Furthermore we have $C_0(\vec{v}, \pi_2((z)_0), (z)_0)$
+    and $C_0(\vec{v}, \pi_2((z')_0), (z')_0)$, so we have $(z)_0 = (z')_0$.
+
+    Similarly we have $\forall i < x C_1(\vec{v}, i, \pi_2((z)_i), \pi_2((z)_{i + 1}), (z)_{i + 1})$
+    and the same formula where $z$ is replaced by $z'$.
+    So if $(z)_i = (z')_i$, and one can deduce $(z)_{i + 1} = (z')_{i + 1}$ using the uniquness assumption
+    for $C_1$. By $\Delta_0(exp)$-induction we obtain $\forall i \leq x \:\: ((z)_i = (z')_i)$.
+
+    The final conjuncts in $C$ give $(z)_{x + 1} = \pi_2((z)_x) = y$ and the same formulas where $z$ is replaced by $z'$ 
+    and where $y$ is replaced by $y'$. But since $(z)_x = (z')_x$ we have $y = y'$, since all the components are equal,
+    $z = z'$. Thus we have $F(\vec{v}, x, y) \land F(\vec{v}, x, y') \to y = y'$.
+  \end{enumerate}
   \end{enumerate}
 \end{proof}
+
+\subsection{${\bf I}\Sigma_1$ provable functions are primitive recursive}
+
+\begin{definition}
+  A closed $\Sigma_1$-formula $\exists \vec{z} B(z)$ with $B \in \Delta_0(exp)$ is said to be
+  ``true at $m$'' (denoted as $m \models \vec{z} B(z)$) if there are numbers
+  $\vec{m} = (m_1, \dots, m_l)$ such that all $m_i < m$ for $i \in \{1, \dots, l\}$
+  such that $B(\vec{m})$ is true in the standard model.
+  
+  A finite set of formulas $\Gamma$ of closed $\Sigma_1$-formulas is ``true at $m$'' 
+  (denoted as $m \models \Gamma$) if at least one of them is true at $m$.
+
+  If $\Gamma(x_1, \dots, x_k)$ is a finite set of $\Sigma_1$-formulas all of whose
+  free variables occur amongst $x_1, \dots, x_k$ and if $f : \mathbb{N}^k \to \mathbb{N}$, then we write 
+  $f \models \Gamma$ if for each assignments $\vec{n} = (n_1, \dots, n_k)$ to the variables  $x_1, \dots, x_k$
+  we have $f(\vec{n}) \models \Gamma(\vec{n})$.
+\end{definition}
+
+Note that we have the persistence property for $\models$ 
+which completely repeats persistence for ${\bf I}\Delta_0(exp)$.
+
+We shall be using a Tait-style formalisation of ${\bf I}\Sigma_0$ where the induction rule
+
+\begin{prooftree}
+  \AxiomC{$\Gamma, A(0)$}
+  \AxiomC{$\Gamma, \neg A(y), A(y + 1)$}
+  \BinaryInfC{$\Gamma, A(t)$}
+\end{prooftree}
+
+where $y$ is not free in $\Gamma$, $t$ is any term and $A$ is any $\Sigma_1$-formula.
+
+\begin{lemma} ($\Sigma_1$-induction)
+  Let $\Gamma(\vec{x})$ be a finite set of $\Sigma_1$-formulas such that
+  \begin{center}
+    ${\bf I}\Sigma_1 \vdash \bigvee \Gamma(\vec{x})$
+  \end{center}
+  then there is a primitive recursive function $f$ such that $f \models \Gamma$ and $f$ is strictly increasing
+  on its variables.
+\end{lemma}
 
 \section{$\epsilon_0$ and Peano Arithmetic}
 
