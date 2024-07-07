@@ -760,7 +760,7 @@ restructed to $\Sigma_1$ formulas.
     Furthermore we have $C_0(\vec{v}, \pi_2((z)_0), (z)_0)$
     and $C_0(\vec{v}, \pi_2((z')_0), (z')_0)$, so we have $(z)_0 = (z')_0$.
 
-    Similarly we have $\forall i < x C_1(\vec{v}, i, \pi_2((z)_i), \pi_2((z)_{i + 1}), (z)_{i + 1})$
+    Similarly we have $\forall i < x \:\: C_1(\vec{v}, i, \pi_2((z)_i), \pi_2((z)_{i + 1}), (z)_{i + 1})$
     and the same formula where $z$ is replaced by $z'$.
     So if $(z)_i = (z')_i$, and one can deduce $(z)_{i + 1} = (z')_{i + 1}$ using the uniquness assumption
     for $C_1$. By $\Delta_0(exp)$-induction we obtain $\forall i \leq x \:\: ((z)_i = (z')_i)$.
@@ -776,7 +776,7 @@ restructed to $\Sigma_1$ formulas.
 
 \begin{definition}
   A closed $\Sigma_1$-formula $\exists \vec{z} B(z)$ with $B \in \Delta_0(exp)$ is said to be
-  ``true at $m$'' (denoted as $m \models \vec{z} B(z)$) if there are numbers
+  ``true at $m$'' (denoted as $m \models \exists \vec{z} B(z)$) if there are numbers
   $\vec{m} = (m_1, \dots, m_l)$ such that all $m_i < m$ for $i \in \{1, \dots, l\}$
   such that $B(\vec{m})$ is true in the standard model.
   
@@ -811,6 +811,156 @@ where $y$ is not free in $\Gamma$, $t$ is any term and $A$ is any $\Sigma_1$-for
   on its variables.
 \end{lemma}
 
+\begin{proof}
+  We note that if $\Gamma$ is provable in this formalisation, then
+it has a proof in which all the non-atomic cut formulas are induction $\Sigma_1$-formulas.
+If $\Gamma$ is classically derivable from non-logical axioms $A_1, \dots, A_s$,
+then there is a cut-free proof (\`{a} la Tait) of $\neg A_1, \Delta, \Gamma$ where $\Delta = A_2, \dots, A_s$.
+Then if $A_1$ is an induction axiom on a formula $F$, then we have have a cut-free proof of
+\begin{center}
+  $F(0) \land \forall y (\neg F(y) \lor F(y + 1)) \land \neg F(t), \Delta, \Gamma$
+\end{center}
+and thus, by inversion, we have cut-free proofs of $F(0), \Delta, \Gamma$, 
+$\neg F(y), F(y + 1), \Delta, \Gamma$ and $\neg F(t), \Delta, \Gamma$.
+
+So we obtain $F(t), \Delta, \Gamma$ by the induction rule and then we obtain $\Delta, \Gamma$ by cutting $F(t)$.
+One can detach $\neg A_2, \dots, \neg A_s$, so we finally have a proof of $\Gamma$ which uses cuts only
+on $\Sigma_1$-induction formulas or on atoms arising from non-logical axioms. Such proofs are said to be ``free-cut'' free.
+
+Let us choose such a proof for $\Gamma(\vec{x})$ and show by induction on the height of a proof that there exists
+a primitive recursive function satisfying $f \models \Gamma$.
+
+\begin{enumerate}
+  \item Let $\Gamma(\vec{x})$ be an axiom, the for all $\vec{n}$ $\Gamma(\vec{n})$ contains a true atom.
+  Choose $f(\vec{n}) = n_1 + \dots + n_k$, and $f$ is clearly primitive recursive, strictly incrasing and $f \models \Gamma$.
+  \item Assume we have
+  \begin{prooftree}
+    \AxiomC{$\Gamma, B_0, B_1$}
+    \RightLabel{$\lor$}
+    \UnaryInfC{$\Gamma, B_0 \lor B_1$}
+  \end{prooftree}
+  Then both $B_0$ and $B_1$ are both $\Delta_0(exp)$-formulas, so any function $f$ satisfying 
+  $f \models \Gamma, B_0, B_1$ also satisfies $\Gamma, B_0 \lor B_1$.
+  \item Assume we have
+  \begin{prooftree}
+    \AxiomC{$\Gamma, B_0$}
+    \AxiomC{$\Gamma, B_1$}
+    \RightLabel{$\land$}
+    \BinaryInfC{$\Gamma, B_0 \land B_1$}
+  \end{prooftree}
+  By the induction hypothesis we have $f_i(\vec{n}) \models \Gamma(\vec{n}), B_i(\vec{n})$ where $i \in \{0,1\}$ for all $\vec{n}$.
+  By the persistence property, $\lambda \vec{n}. f_0(\vec{n}) + f_1(\vec{n}) \models \Gamma, B_0 \land B_1$.
+  \item Assume we have
+  \begin{prooftree}
+    \AxiomC{$\Gamma, B(y)$}
+    \RightLabel{$\forall$}
+    \UnaryInfC{$\Gamma, \forall y B(y)$}
+  \end{prooftree}
+  where $y$ is not free in $\Gamma$. As far as all formulas are $\Sigma_1$, $\forall y B(y)$ 
+  must be ${\bf I}\Delta_0(exp)$, so $B(y) \eqcirc \neg(y < t) \lor B'(y)$ for some elemetary or primitive recursive term $t$.
+  Assume we have $f_0 \models \Gamma, \neg(y < t) \lor B'(y)$ for some increasing primitive recursive function $f_0$.
+  Then, for any assignments $\vec{x} \mapsto \vec{n}$ and $y \mapsto k$, we have
+  \begin{center}
+    $f_0(\vec{n}, k) \models \Gamma(\vec{n}), \neg (k < t(\vec{n})), B'(\vec{n}, k)$.
+  \end{center}
+  We let
+  \begin{center}
+    $f(\vec{n}) = \sum \limits_{k < g(\vec{n})} f_0(\vec{n}, k)$
+  \end{center}
+  for some function $g$, which is increasing primitive recursive bounding the values of term $t$.
+  So we have either $f(\vec{n}) \models \Gamma$ or $B'(\vec{n}, k)$ is true for every $k < t(\vec{n})$.
+  Thus $f \models \Gamma, \forall y B(y)$ as required.
+  \item Suppose we have
+  \begin{prooftree}
+    \AxiomC{$\Gamma, A(t)$}
+    \RightLabel{$\exists$}
+    \UnaryInfC{$\Gamma, \exists y A(y)$}
+  \end{prooftree}
+  where $A$ is a $\Sigma_1$-formula. By the induction hypothesis we have a function $f_0$ such that for all $\vec{n}$
+  \begin{center}
+    $f_0(\vec{n}) \models \Gamma(\vec{n}), A(t(\vec{n}), \vec{n})$
+  \end{center}
+  Then either $f_0(\vec{n}) \models \Gamma(\vec{n})$ or otherwise $f_0(\vec{n})$ 
+  bounds true witnesses for all the existential quantifiers already in $A(t(\vec{n}, \vec{n}))$.
+  Choose an elementary bounding function $g$ for the term $t$ and define 
+  $f(\vec{n}) = f_0(\vec{n}) + g(\vec{n})$, so we have either 
+  $f(\vec{n}) \models \Gamma(\vec{n})$ or $f(\vec{n}) \models \exists y A(y, \vec{n})$ for all $\vec{n}$.
+  \item Assume we have
+  \begin{prooftree}
+    \AxiomC{$\Gamma, \forall \vec{z} \neg B(\vec{z})$}
+    \AxiomC{$\Gamma, \exists \vec{z} B(\vec{z})$}
+    \RightLabel{{\bf cut}}
+    \BinaryInfC{$\Gamma$}
+  \end{prooftree}
+  where $\exists \vec{z} B(\vec{z})$ is a cut $\Sigma_1$-formula.
+  
+  Note that we have
+  \begin{prooftree}
+    \AxiomC{$\Gamma, \neg B(\vec{z})$}
+    \RightLabel{$\forall$}
+    \UnaryInfC{$\Gamma, \forall \vec{z} \neg B(\vec{z})$}
+  \end{prooftree}
+  Note $B$ is a $\Delta_0(\exp)$-formula, so let us apply the induction hypothesis to obtain a
+  primitive recursive function $f_0$ such that for each assignments $\vec{x} \mapsto \vec{n}$ and $\vec{z} \mapsto \vec{m}$
+  \begin{center}
+    $f_0(\vec{n}, \vec{m}) \models \Gamma(\vec{n}), \neg B(\vec{n}, \vec{m})$.
+  \end{center}
+  We apply the induction hypothesis to the second premise to obtain a primitive recursive function $f_1$ such that
+  for all $\vec{n}$ either $f_1(\vec{n}) \models \Gamma(\vec{n})$ or otherwise there are fixed witnesses 
+  $\vec{m} < f_1(\vec{n})$ s.t. $B(\vec{n}, \vec{m})$ is true.
+  Let us define $f$ by substitution:
+  \begin{center}
+    $f(\vec{n}) = f_0(\vec{n}, f_1(\vec{n}), \dots, f_1(\vec{n}))$
+  \end{center}
+  where $f$ is primitive recursive, greater or equal that $f_1$ (pointwise) and strictly increasing.
+  Furthermore $f \models \Gamma$.
+  
+  For otherwise, let us suppose there exists a tuple $\vec{n}$ such that $\Gamma(\vec{n})$ is not true
+  $f(\vec{n})$ and, thus, by persistence at $f_1(\vec{n})$. So $B(\vec{n}, \vec{m})$ is true for
+  some $\vec{m} < f_1(\vec{n})$. Thus $f_0(\vec{n}, \vec{m}) < f(\vec{n})$, and then, by persistence, $\Gamma(\vec{n})$
+  cannot be true at $f_0(\vec{n}, \vec{m})$. Then $B(\vec{n}, \vec{m})$, so we have a contradiction.
+  \item Suppose we have
+  \begin{prooftree}
+    \AxiomC{$\Gamma(\vec{x}), A(\vec{x}, 0)$}
+    \AxiomC{$\Gamma, \neg A(\vec{x}, y), A(\vec{x}, y + 1)$}
+    \BinaryInfC{$\Gamma, A(\vec{x}, t)$}
+  \end{prooftree}
+  where $A(\vec{x}, y)$ is an induction $\Sigma_1$-formula of the form $\exists \vec{z} B(\vec{x}, y, \vec{z})$.
+  Let us invert universal quantifiers in $\neg A(\vec{x}, y)$, the second premise of the rule becomes
+   \begin{center}
+     $\Gamma(\vec{x}), \neg B(\vec{x}, y, \vec{z}), A(\vec{x}, y + 1)$
+   \end{center}
+  which is now a set $\Sigma_1$-formulas. We can apply the induction hypothesis to each of the premises to
+  have primitive recursive function $f_0$ and $f_1$ such that for each $\vec{n}$, $k$ and $\vec{m}$
+  \begin{center}
+    $f_0(\vec{n}) \models \Gamma(\vec{n}), A(\vec{n}, 0)$
+
+    $f_1(\vec{n}, k, \vec{m}) \models \Gamma(\vec{n}), \neg B(\vec{n}, k, \vec{m}), A(\vec{n}, k + 1)$
+  \end{center}
+  Define $f$ by primitive recursion from $f_0$ and $f_1$ the following way
+  \begin{center}
+    $f(\vec{n}, 0) = f_0(\vec{n})$
+
+    $f(\vec{n}, k + 1) = f_1(\vec{n}, k, f(\vec{n}, k), \dots, f(\vec{n}, k))$
+  \end{center}
+
+  Then for all $\vec{n}$ and for all $\vec{k}$ one has $f(\vec{n}, k) \models \Gamma(\vec{n}), A(\vec{n}, k)$ which is shown
+  by induction on $k$.
+  The base case holds by the definition of $f_0(\vec{n})$. For the induction step assume that 
+  $f(\vec{n}, k) \models \Gamma(\vec{n}), A(\vec{n}, k)$. If $\Gamma(\vec{n})$ is not true at 
+  $f(\vec{n}, k + 1)$. By persistence it is not true at $f(\vec{n}, k)$ and thus 
+  $f(\vec{n}, k) \models A(\vec{n}, k)$.
+  Therefore there are numbers $\vec{m} < f(\vec{n}, k)$ such that $B(\vec{n}, k, \vec{m})$ is true.
+  Thus $f_1(\vec{n}, k, \vec{m}) \models \Gamma(\vec{n}), A(\vec{n}, k + 1)$ and since 
+  $f_1(\vec{n}, k, \vec{m}) \leq f(\vec{n}, k + 1)$ we have, by persistence, $f(\vec{n}, k + 1) \models \Gamma(\vec{n}), A(\vec{n}, k + 1)$
+  as required.
+
+  So we substitute for the final argument $k$ in $f$ an elementary (or primitive recursive) function $g$
+  which bounds the values of $t$, so that $f'(\vec{n}) = f(\vec{n}, g(\vec{n}))$, and thus
+  we have $f(\vec{n}, t(\vec{n})) \models \Gamma(\vec{n}), A(\vec{n}, t(\vec{n}))$ for all $\vec{n}$ and thus, by persistence, $f' \models \Gamma(\vec{x}), A(\vec{x}, t)$.
+\end{enumerate}
+\end{proof}
+
 \section{$\epsilon_0$ and Peano Arithmetic}
 
 \section{${\bf RCA}_0$}
@@ -822,6 +972,8 @@ where $y$ is not free in $\Gamma$, $t$ is any term and $A$ is any $\Sigma_1$-for
 \section{${\bf ATR}$}
 
 \section{${\bf \Pi_1^1}$-comprehension}
+
+\section{Kripke-Platek Set Theory}
 
 
 \bibliographystyle{alpha}
