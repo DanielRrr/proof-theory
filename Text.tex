@@ -961,7 +961,89 @@ a primitive recursive function satisfying $f \models \Gamma$.
 \end{enumerate}
 \end{proof}
 
-\section{$\epsilon_0$ and Peano Arithmetic}
+\begin{theorem}
+  The provably recursive functions of ${\bf I}\Sigma_1$ are exactly primitive recursive functions.
+\end{theorem}
+
+\begin{proof}
+  We have already shown that all primitive recursive functions are provably recursive in ${\bf I}\Sigma_1$,
+  so let us show the converse.
+
+  Let $g : \mathbb{N}^k \to \mathbb{N}$ is $\Sigma_1$ be a function defined by a $\Sigma_1$-formula
+  $F(\vec{x}, y) := \exists z C(\vec{x}, y, z)$ where $C$ is $\Delta_0(exp)$ and
+  ${\bf I}\Sigma_1 \models \exists y F(\vec{x}, y)$.
+  By the lemma above, there exists a primitive recursive function $f$ such that for all $n \in \mathbb{N}^k$
+  \begin{center}
+    $f(\vec{n}) \models \exists y \exists z C(\vec{n}, y, z)$.
+  \end{center}
+  That is, for every $\vec{n}$ there is an $m < f(\vec{n})$ and a $k < f(\vec{n})$
+  such that $C(\vec{n}, m, k)$ is true and this $m$ is the value of $g(\vec{n})$.
+
+  $g$ can be defined by primitive recursion from $f$ the following way:
+
+  \begin{center}
+    $g(\vec{n}) = (\mu_{m < h(\vec{n})} C(\vec{n}, (m)_0, (m)_1))$
+  \end{center}
+  where $h(\vec{n}) = \langle f(\vec{n}), f(\vec{n}) \rangle$.
+\end{proof}
+
+\section{$\epsilon_0$-recursion in Peano Arithmetic}
+
+We show that the provably recursive functions of Peano arithmetic are $\epsilon_0$-recursive functions, that is, 
+functions definable from the primitive recursive functions by substitutions and recursion over well-orderings
+of natural numbers with order types strictly less than the ordinal
+\begin{center}
+  $\epsilon_0 = \sup \{ \omega, \omega^{\omega}, \omega^{\omega^{\omega}}, \dots \}$
+\end{center}
+Equivalently, $\epsilon_0$ can be defined as the least fixed point of the mapping $\alpha \mapsto \omega^{\alpha}$
+where $\alpha$ is an ordinal.
+
+Let us discuss first how one can represent ordinals below $\epsilon_0$.
+
+\subsection{Ordinals below $\epsilon_0$}
+
+Every ordinal $\alpha < \epsilon_0$ is either $0$ or $\alpha$ can be represented uniquely in \emph{Cantor normal form}:
+\begin{center}
+  $\alpha = \omega^{\gamma_1} \cdot c_1 + \omega^{\gamma^{\gamma_1}} \cdot c_2 + \dots + \omega^{\gamma_k} \cdot c_k$
+\end{center}
+where $k < \omega$, $\gamma_k < \dots < \gamma_2 < \gamma_1 < \alpha$ and $c_1, \dots, c_k < \omega$ are coefficients.
+If $\gamma_k = 0$, then $\alpha$ is a successor ordinal, written $\operatorname{Succ}(\alpha)$, 
+and its predecessor $\alpha - 1$ has the same representation but with $\omega^{\gamma_{k - 1}} \cdot c_{k - 1}$.
+Otherwise $\alpha$ is a limit ordinal ($\operatorname{Lim}(\alpha)$) and it has infinitely many possible
+increasing sequences of smaller ordinals whose limit is $\alpha$.
+
+We shall pick out one concrete sequence $\{ \alpha(n) \: | \: n < \omega \}$ for each limit ordinal $\alpha$ the following way.
+First write $\alpha$ as $\delta + \omega^{\gamma}$ where
+\begin{center}
+  $\delta = \omega^{\gamma_1} \cdot c_1 + \dots + \omega^{\gamma_k} \cdot (c_k - 1)$
+
+  $\gamma = \gamma_k$.
+\end{center}
+
+By induction we can assume that when $\gamma$ is a limit ordinal, its fundamental sequence 
+$\{ \gamma(n) \: | \: n < \omega \}$ has been already specified. We let for each $n < \omega$
+\begin{center}
+  $\alpha(n) = \begin{cases}
+    \delta + \omega^{\gamma - 1} \cdot (n + 1), \text{if $\operatorname{Succ}(\gamma)$} \\
+    \delta + \omega^{\gamma(n)}, \text{if $\operatorname{Lim}(\gamma)$}.
+  \end{cases}$
+\end{center}
+Clearly
+\begin{center}
+  $\alpha = \lim \limits_{n \to \omega} \alpha(n)$.
+\end{center}
+
+\begin{definition}
+  Let $\alpha < \epsilon_0$ and $n < \omega$, define a finite set of ordinals $\alpha[n]$ the following way:
+
+  \begin{center}
+    $\alpha(n) = \begin{cases}
+      \emptyset, \text{if $\alpha = 0 $} \\
+      (\alpha - 1)[n] \cup \{ \alpha - 1 \}, \text{if $\operatorname{Succ}(\alpha)$} \\
+      \alpha(n)[n], \text{ if $\operatorname{Lim}(\alpha)$}
+    \end{cases}$
+  \end{center}
+\end{definition}
 
 \section{${\bf RCA}_0$}
 
