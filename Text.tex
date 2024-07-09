@@ -69,6 +69,10 @@
 
 \maketitle
 
+\tableofcontents
+
+\newpage
+
 \section{Provable Recursion in ${\bf I}\Delta_0(\operatorname{exp})$}
 
 ${\bf I}\Delta_0(\operatorname{exp})$ is a theory in first-order logic in the language:
@@ -1037,13 +1041,132 @@ Clearly
   Let $\alpha < \epsilon_0$ and $n < \omega$, define a finite set of ordinals $\alpha[n]$ the following way:
 
   \begin{center}
-    $\alpha(n) = \begin{cases}
+    $\alpha[n] = \begin{cases}
       \emptyset, \text{if $\alpha = 0 $} \\
       (\alpha - 1)[n] \cup \{ \alpha - 1 \}, \text{if $\operatorname{Succ}(\alpha)$} \\
       \alpha(n)[n], \text{ if $\operatorname{Lim}(\alpha)$}
     \end{cases}$
   \end{center}
 \end{definition}
+
+\begin{lemma}~\label{ord:sum:1}
+  For each $\alpha = \delta + \omega^{\gamma}$ and for each $n < \omega$
+  \begin{center}
+    $\alpha[n] = \delta[n] \cup \{ \delta + \omega^{\gamma_1} \cdot c_1 + \dots + \omega^{\gamma_k} \cdot c_k \: | \: \forall i (\gamma_i \in \gamma[n] \land c_i \leq n) \}$.
+  \end{center}
+\end{lemma}
+
+\begin{proof}
+  Induction on $\gamma$.
+
+  \begin{enumerate}
+    \item $\gamma = 0$, then $\gamma[n] = \emptyset$ and the right hand side is 
+    $\delta[n] \cap \{ \delta \}$, which is the same as $\alpha[n] = (\delta + 1)[n]$.
+    \item If $\gamma$ is limit, then $\gamma[n] = \gamma(n)[n]$, so the right hand side
+    is the same as the one with $ \gamma(n)[n]$ instead of $\gamma[n]$. 
+    By the induction hypothesis applied to $\alpha(n) = \delta + \omega^{\gamma(n)}$, which is equal to 
+    $\alpha(n)[n]$, which is $\alpha[n]$ by definition.
+    \item Suppose $\gamma$ is a successor. Then $\alpha$ is a limit and $\alpha[n] = \alpha(n)[n]$,
+    where $\alpha(n) = \delta + \omega^{\gamma - 1} \cdot (n + 1)$.
+    So we can write $\alpha(n) = \alpha(n - 1) + \omega^{\gamma - 1}$, where $\alpha(-1) = \delta$ when $n = 0$.
+    By the induction hypothesis for $\gamma - 1$, the set $\alpha[n]$ equals
+    \begin{center}
+      $\alpha(n - 1)[n] \cup \{ \alpha(n - 1) + \omega^{\gamma_1} \cdot c_1 + \dots + \omega^{\gamma_k} \cdot c_k \: | \: \forall i (\gamma_1 \in (\gamma - 1)[n] \land c_i \leq n)\}$
+    \end{center}
+    and similarly for each $\alpha(n - 1)[n], \alpha(n - 2)[n], \dots, \alpha(1)[n]$. 
+    For each $m \leq n$, $\alpha(m - q) = \delta + \omega^{\gamma - 1} \cdot m$. In turn, this last set is the same
+    as
+    \begin{center}
+      $\delta[n] \cup \{ \delta + \omega^{\gamma - 1} \cdot m + \omega^{\gamma_1} \cdot c_1 + \dots + \omega^{\gamma_k} \cdot c_k \: | \: \forall i (\gamma_i \in (\gamma - 1)[n] \land c_i \leq n) \land m \leq n\}$
+    \end{center}
+    and this is the set since $\gamma[n] = (\gamma - 1)[n] \cup \{ \gamma - 1\}$.
+  \end{enumerate}
+\end{proof}
+
+\begin{col}
+  Let $\alpha < \epsilon_0$ be a limit ordinal, then for every $0 \neq n < \omega$ $\alpha(n) \in \alpha[n + 1]$.
+  Furthermore if $\beta \in \gamma[n]$, then $\omega^{\beta} \in \omega^{\gamma}[n]$.
+\end{col}
+
+\begin{definition}
+The \emph{maximum coefficient} of $\beta = \omega^{\beta_1} \cdot b_1 + \dots + \omega^{\beta_l} \cdot b_l$
+is defined by induction to be the maximum of all the $b_i$'s and all the maximum coefficients of the exponents $\beta_i$'s.
+\end{definition}
+
+\begin{lemma}
+  If $\beta < \alpha$ and the maximum coefficitent of $\beta$ is $\leq n$, so $\beta \in \alpha[n]$. 
+\end{lemma}
+
+\begin{proof}
+  By induction on $\alpha$. Let $\alpha = \delta + \omega^{\gamma}$. If $\beta < \delta$,
+  then $\beta \in \delta[n]$ by the induction hypothesis and $\delta[n] \subseteq \alpha[n]$ by Lemma~\ref{ord:sum:1}.
+  Otherwise
+  \begin{center}
+    $\beta = \delta + \omega^{\beta_1} \cdot b_1 + \dots + \omega^{\beta_k} \cdot b_k$
+  \end{center}
+  for $\alpha > \gamma > \beta_1 > \dots > \beta_k$ and $b_i \leq n$. By induction hypothesis 
+  $\beta_i \in \gamma[n]$, so $\beta \in \alpha[n]$ by Lemma~\ref{ord:sum:1}.
+\end{proof}
+
+\begin{definition}
+  Let $G_{\alpha}(n)$ denote the cardinality of the finite set $\alpha[n]$.
+  We have
+
+  \begin{center}
+  $G_{\alpha}(n) = \begin{cases}
+    0, \text{if $\alpha = 0$} \\
+    G_{\alpha - 1}(n + 1), \text{ if $\operatorname{Succ}(\alpha)$} \\
+    G_{\alpha(n)}(n), \text{if $\operatorname{Lim}(\alpha)$} 
+  \end{cases}$
+  \end{center}
+\end{definition}
+
+The hierarchy of functions $G_{\alpha}$ is the \emph{slow-growing} hierarchy.
+
+\begin{lemma} If $\alpha = \delta + \omega^{\gamma}$, then for all $n < \omega$
+  \begin{center}
+    $G_{\alpha}(n) = G_{\delta}(n) + (n + 1)^{G_{\gamma}(n)}$.
+  \end{center}
+  Thus for each $\alpha < \epsilon_0$, $G_{\alpha}(n)$ is the elementary function
+  which results by substituting $n + 1$ for every occurence of $\omega$ in the Cantor normal form $\omega$.
+\end{lemma}
+
+\begin{proof}
+  Induction on $\gamma$.
+
+  \begin{enumerate}
+    \item If $\gamma = 0$, then $\alpha = \delta + 1$, thus
+    \begin{center}
+      $G_{\alpha}(n) = G_{\delta}(n) + 1 =  G_{\delta}(n) + (n + 1)^0$.
+    \end{center}
+    \item If $\gamma$ is a successor, then $\alpha = \delta + \omega^{\gamma}$ is limit
+    and $\alpha(n) = \delta + \omega^{\gamma - 1} \cdot (n + 1)$, so
+    we apply the induction hypothesis for $\gamma - 1$ $n + 1$ times and thus we have
+    \begin{center}
+      $G_{\alpha}(n) = G_{\alpha(n)}(n) = G_{\delta}(n) + (n + 1)^{G_{\gamma - 1}(n)} \cdot (n + 1) = G_{\delta}(n) + (n + 1)^{G_{\gamma}(n)}$
+    \end{center}
+    since $G_{\gamma - 1}(n) + 1 = G_{\gamma}(n)$.
+    \item If $\gamma$ is a limit ordinal, then $\alpha(n) = \delta + \omega^{\gamma(n)}$, 
+    so let us apply the induction hypothesis to $\gamma(n)$, then we have
+    \begin{center}
+      $G_{\alpha}(n) = G_{\alpha(n)}(n) = G_{\delta}(n) + (n + 1)^{G_{\gamma(n)}(n)}$
+    \end{center}
+    which gives the result since $\Gamma_{\gamma(n)}(n) = G_{\gamma}(n)$.
+  \end{enumerate}
+\end{proof}
+
+\begin{definition} {\bf (Coding ordinals)}
+
+  Let $\beta = \omega^{\beta_1} \cdot b_1 + \dots \omega^{\beta_l} \cdot b_l$ be an ordinal.
+  A \emph{coding ordinal} is the sequence number $\overline{\beta}$ constructed recursively the following way
+  \begin{center}
+    $\overline{\beta} = \langle \langle \overline{\beta_1}, b_1 \rangle, \dots, \langle \overline{\beta_l}, b_l \rangle \rangle$.
+  \end{center}
+  where $0$ is coded by the empty sequence number. $\overline{\beta}$ is numerically greater than the maximum
+  coefficient of $\beta$ and greater than the codes $\overline{\beta_i}$ of all its exponents and their exponents, etc.
+\end{definition}
+
+\subsection{Introducing the fast-growing hierarchy}
 
 \section{${\bf RCA}_0$}
 
