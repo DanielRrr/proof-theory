@@ -991,29 +991,33 @@ a primitive recursive function satisfying $f \models \Gamma$.
   where $h(\vec{n}) = \langle f(\vec{n}), f(\vec{n}) \rangle$.
 \end{proof}
 
-\section{$\epsilon_0$-recursion in Peano Arithmetic}
+\section{$\varepsilon_0$-recursion in Peano Arithmetic}
 
-We show that the provably recursive functions of Peano arithmetic are $\epsilon_0$-recursive functions, that is, 
+We show that the provably recursive functions of Peano arithmetic are $\varepsilon_0$-recursive functions, that is, 
 functions definable from the primitive recursive functions by substitutions and recursion over well-orderings
 of natural numbers with order types strictly less than the ordinal
 \begin{center}
-  $\epsilon_0 = \sup \{ \omega, \omega^{\omega}, \omega^{\omega^{\omega}}, \dots \}$
+  $\varepsilon_0 = \sup \{ \omega, \omega^{\omega}, \omega^{\omega^{\omega}}, \dots \}$
 \end{center}
-Equivalently, $\epsilon_0$ can be defined as the least fixed point of the mapping $\alpha \mapsto \omega^{\alpha}$
+Equivalently, $\varepsilon_0$ can be defined as the least fixed point of the mapping $\alpha \mapsto \omega^{\alpha}$
 where $\alpha$ is an ordinal.
 
-Let us discuss first how one can represent ordinals below $\epsilon_0$.
+Let us discuss first how one can represent ordinals below $\varepsilon_0$.
 
-\subsection{Ordinals below $\epsilon_0$}
+\subsection{Ordinals below $\varepsilon_0$}
 
-Every ordinal $\alpha < \epsilon_0$ is either $0$ or $\alpha$ can be represented uniquely in \emph{Cantor normal form}:
+Every ordinal $\alpha < \varepsilon_0$ is either $0$ or $\alpha$ can be represented uniquely in \emph{Cantor normal form}:
 \begin{center}
   $\alpha = \omega^{\gamma_1} \cdot c_1 + \omega^{\gamma^{\gamma_1}} \cdot c_2 + \dots + \omega^{\gamma_k} \cdot c_k$
 \end{center}
 where $k < \omega$, $\gamma_k < \dots < \gamma_2 < \gamma_1 < \alpha$ and $c_1, \dots, c_k < \omega$ are coefficients.
 If $\gamma_k = 0$, then $\alpha$ is a successor ordinal, written $\operatorname{Succ}(\alpha)$, 
-and its predecessor $\alpha - 1$ has the same representation but with $\omega^{\gamma_{k - 1}} \cdot c_{k - 1}$.
-Otherwise $\alpha$ is a limit ordinal ($\operatorname{Lim}(\alpha)$) and it has infinitely many possible
+and its predecessor $\alpha - 1$ the representation
+\begin{center}
+  $\alpha = \omega^{\gamma_1} \cdot c_1 + \omega^{\gamma^{\gamma_1}} \cdot c_2 + \dots + \omega^{\gamma_{k - 1}} \cdot c_{k - 1}$.
+\end{center}
+
+Otherwise $\alpha$ is a limit ordinal, written $\operatorname{Lim}(\alpha)$, and it has infinitely many possible
 increasing sequences of smaller ordinals whose limit is $\alpha$.
 
 We shall pick out one concrete sequence $\{ \alpha(n) \: | \: n < \omega \}$ for each limit ordinal $\alpha$ the following way.
@@ -1038,7 +1042,7 @@ Clearly
 \end{center}
 
 \begin{definition}
-  Let $\alpha < \epsilon_0$ and $n < \omega$, define a finite set of ordinals $\alpha[n]$ the following way:
+  Let $\alpha < \varepsilon_0$ and $n < \omega$, define a finite set of ordinals $\alpha[n]$ the following way:
 
   \begin{center}
     $\alpha[n] = \begin{cases}
@@ -1084,7 +1088,7 @@ Clearly
 \end{proof}
 
 \begin{col}
-  Let $\alpha < \epsilon_0$ be a limit ordinal, then for every $0 \neq n < \omega$ $\alpha(n) \in \alpha[n + 1]$.
+  Let $\alpha < \varepsilon_0$ be a limit ordinal, then for every $0 \neq n < \omega$ $\alpha(n) \in \alpha[n + 1]$.
   Furthermore if $\beta \in \gamma[n]$, then $\omega^{\beta} \in \omega^{\gamma}[n]$.
 \end{col}
 
@@ -1127,7 +1131,7 @@ The hierarchy of functions $G_{\alpha}$ is the \emph{slow-growing} hierarchy.
   \begin{center}
     $G_{\alpha}(n) = G_{\delta}(n) + (n + 1)^{G_{\gamma}(n)}$.
   \end{center}
-  Thus for each $\alpha < \epsilon_0$, $G_{\alpha}(n)$ is the elementary function
+  Thus for each $\alpha < \varepsilon_0$, $G_{\alpha}(n)$ is the elementary function
   which results by substituting $n + 1$ for every occurence of $\omega$ in the Cantor normal form $\omega$.
 \end{lemma}
 
@@ -1162,9 +1166,73 @@ The hierarchy of functions $G_{\alpha}$ is the \emph{slow-growing} hierarchy.
   \begin{center}
     $\overline{\beta} = \langle \langle \overline{\beta_1}, b_1 \rangle, \dots, \langle \overline{\beta_l}, b_l \rangle \rangle$.
   \end{center}
-  where $0$ is coded by the empty sequence number. $\overline{\beta}$ is numerically greater than the maximum
-  coefficient of $\beta$ and greater than the codes $\overline{\beta_i}$ of all its exponents and their exponents, etc.
 \end{definition}
+where $0$ is coded by the empty sequence number. $\overline{\beta}$ is numerically greater than the maximum
+coefficient of $\beta$ and greater than the codes $\overline{\beta_i}$ of all its exponents and their exponents, etc.
+
+\begin{lemma}
+  $ $
+  \begin{enumerate}
+    \item There exists an elementary function $h : \mathbb{N} \times \mathbb{N} \to \mathbb{N}$ such that, for each
+    ordinal $\beta = \omega^{\beta_1} \cdot b_1 + \dots \omega^{\beta_l} \cdot b_l$:
+    \begin{center}
+      $h(\overline{\beta}, n) = \begin{cases}
+        0, \text{if $\beta = 0$} \\
+        \overline{\beta - 1}, \text{if $\operatorname{Succ}(\beta)$} \\
+        \overline{\beta(n)}, \text{if $\operatorname{Lim}(\beta)$}
+      \end{cases}$
+    \end{center}
+    \item For each ordinal $\alpha < \varepsilon_0$ there exists an elementary well-ordering 
+    $\prec_{\alpha} \subset \mathbb{N} \times \mathbb{N}$ such that
+    \begin{center}
+      $\forall b, c \in \mathbb{N} \:\: b \prec_{\alpha} c \leftrightarrow \exists \beta, \gamma < \alpha \:\: \beta < \gamma \: \& \: b = \overline{\beta} \: \& \: c = \overline{\gamma}$.
+    \end{center}
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof} $ $
+
+  \begin{enumerate}
+    \item First let
+    \begin{center}
+      $h(0, n) = 0$
+    \end{center}
+    for any $n$. Then let $0 < m < \omega$ be a non-zero sequence number.
+    We first should see if the rightmost component $\pi_2$ is a pair $(m', n')$. 
+    If so and $m' = 0$ and $n' \neq 0$, then $\beta$ is a successor and the code of its predecessor, 
+    $h(m, n)$, is defined as the new sequence number that we obtain by reducing $n'$ by one or by removing
+    this final component if $n' = 1$.
+
+    If $\pi_2(m) = \langle m', n' \rangle$ where both $m'$ and $n'$ are non-zero, then $\beta$ is a limit ordinal of then form
+    $\delta + \omega^{\gamma} \cdot n'$ where $m' = \overline{\gamma}$. Let $k$ be the code of
+    $\delta + \omega^{\gamma} \cdot (n' - 1)$, which is obtained by reducing $n'$ by one inside $m$ 
+    (or by deleting the final component from $m$ when $n' = 1$).
+
+    At the ``right hand end'' of $\beta$ we have a ``spare'' $\omega^{\gamma}$ which must be either reduced to
+    $\omega^{\gamma - 1} \cdot (n + 1)$ when $\operatorname{Succ}(\gamma)$ or to $\omega^{\gamma(n)}$ if $\operatorname{Lim}(\gamma)$.
+    In either case we are able to produce $\beta(n)$. Thus the required code $h(m, n)$ of $\beta(n)$
+    will be obtained by tagging on to the end of the sequence number $k$ one additinal pair encoding this additional term.
+
+    If we assume inductively that $h(m', n)$ has been already defined for $m' < m$, then such an additional component
+    is either $\langle h(m',n), n + 1\rangle$ if $\operatorname{Succ}(\gamma)$ or $\langle h(m',n), 1\rangle$
+    if $\operatorname{Lim}(\gamma)$.
+
+    This defines $h(m,n)$, but such a definition is actually primitive recursive so far. Let us chech that $h$ is
+    elementarily bounded, i.e. $h$ is defined by limited recursion from elementary functions.
+    Note that $h(m, n) < m$ whenever $m$ codes a successor ordinal. If $m$ codes a limit ordinal, 
+    $h(m,n)$ is obtained from the sequence number $k < m$ by adding a new pair on the end.
+    An extra item $i$ is tagged on the end of a sequence number $k$ by the function $\pi(k, i)$ which is quadratic in both argument.
+    If the item added is the pair $\langle h(m', n), n + 1 \rangle$ where $\operatorname{Succ}(\gamma)$,
+    then $h(m', n) < m$, so $h(m, n)$ is numerically bounded by some fixed polynomial in $m$ and $n$.
+    In the other case, we can say that $h(m, n)$ is numerically bounded by some fixed polynomial of $m$ and $h(m',n)$.
+    Since $m'$ codes an exponent in the Cantor normal form encoded by $m$, the second polynomial
+    is iterated at most $d$ times, where $d$ is the ``exponential height'' of the normal form.
+    Thus $h(m, n)$ is bounded by some $d$-times iterated polynomial of $m + n$.
+    $d < m$, so $h(m, n)$ is bounded by the elementary function $2^{2^{c \cdot (m + n)}}$ for some $c < \omega$.
+    Therefore $h$ is elementary as it is defined by bounded recursion.
+    \item 
+  \end{enumerate}
+\end{proof}
 
 \subsection{Introducing the fast-growing hierarchy}
 
