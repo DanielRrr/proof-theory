@@ -1098,7 +1098,7 @@ is defined by induction to be the maximum of all the $b_i$'s and all the maximum
 \end{definition}
 
 \begin{lemma}
-  If $\beta < \alpha$ and the maximum coefficitent of $\beta$ is $\leq n$, so $\beta \in \alpha[n]$. 
+  If $\beta < \alpha$ and the maximum coefficient of $\beta$ is $\leq n$, so $\beta \in \alpha[n]$. 
 \end{lemma}
 
 \begin{proof}
@@ -1230,9 +1230,37 @@ coefficient of $\beta$ and greater than the codes $\overline{\beta_i}$ of all it
     Thus $h(m, n)$ is bounded by some $d$-times iterated polynomial of $m + n$.
     $d < m$, so $h(m, n)$ is bounded by the elementary function $2^{2^{c \cdot (m + n)}}$ for some $c < \omega$.
     Therefore $h$ is elementary as it is defined by bounded recursion.
-    \item 
+    \item Let $\alpha < \varepsilon_0$ and let $d$ be the exponential height of its Cantor normal form.
+    We use the function $h$ from the previous part, but we apply it to codes below $\alpha$ only. They have the exponential
+    height $\leq d$, so we can consider $h$ as being bounded by some fixed polynomial of its two arguments.
+    Define $g(0, n) = \overline{\alpha}$ and $g(i+1,n) = h(g(i, n), n)$ and notice that $g$ is therefore bounded by an $i$-times iterated polynomial,
+    so $g$ is defined by an elementarily limited recursion from $h$, so it is elementary.
+    
+    Define $b \prec_{\alpha} c$ if and only if $c \neq 0$ and there are $i$ and $j$ such that 
+    $0 < i < j \leq G_{\alpha}(\max(b, c) + 1)$ and $g(i, \max(b,c)) = c$ and $g(j, \max(b,c)) = b$.
+    The function $g$ and $G_{\alpha}$ are elementary, so is the relation $\prec_{\alpha}$ since the quantifiers are
+    bounded. By the properties of $h$ it is clear that if $i < j$ then $g(j, \max(b,c))$ codes an ordinal greater than 
+    $g(j, \max(b,c))$. Hence $b \prec_{\alpha} c$, then $b = \overline{\beta}$ and $c = \overline{\gamma}$ for some
+    $\beta < \gamma < \alpha$.
+
+    Now assume $b = \overline{\beta}$, $c = \overline{\gamma}$ and $\beta < \gamma < \alpha$.
+    The code of an ordinal is greater than its maximal coefficient, so we have
+    $\beta \in \alpha[\max(b,c)]$ and $\gamma \in \alpha[\max(b,c)]$. Thus the sequence starting
+    with $\alpha$ and at each stage descending from a $\delta$ to either $\delta - 1$ if
+    $\operatorname{Succ}(\delta)$ or $\delta(\max(b,c))$ if $\operatorname{Lim}(\delta)$ necessarily 
+    passes through $\gamma$ and then through $\beta$.
+    In turn, it means there are $i, j < \omega$ such that $0 < i < j$, $g(i, \max(b, c)) = c$, $g(j, \max(b, c)) = b$.
+    So $b \prec_{\alpha} c$ holds if we can show that $j \leq G_{\alpha}(\max(b,c) + 1)$.
+    In the sequence described above, only the successor stages contribute an element $\delta - 1$ to
+    $\alpha[\max(b,c)]$. At the limit stages $\delta(\max(b, c))$ does not get put it.
+    Although $\delta(n)$ does not belong to $\delta[n]$, it does belong to $\delta[n + 1]$.
+    Therefore all the ordinals in the descending sequence lie in $\alpha[\max(b,c) + 1]$, so $j$ can not be bigger
+    than the cardinality of this set, which is $G_{\alpha}(\max(b,c) + 1)$.
   \end{enumerate}
 \end{proof}
+
+The moral is that the principles of transfinite induction and recursion over the initials segments of ordinals below
+$\varepsilon_0$ can be expressed by means of ${\bf I}\Delta_0(exp)$.
 
 \subsection{Introducing the fast-growing hierarchy}
 
