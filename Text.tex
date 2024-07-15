@@ -1264,6 +1264,112 @@ $\varepsilon_0$ can be expressed by means of ${\bf I}\Delta_0(exp)$.
 
 \subsection{Introducing the fast-growing hierarchy}
 
+\begin{definition}
+  The \emph{Hardy hierarchy} $\{ H_{\alpha}\}_{\alpha < \varepsilon_0}$ is defined by recursion on $\alpha$:
+
+  \begin{center}
+    $H_{\alpha}(n) = \begin{cases}
+      n, \text{ if $\alpha = 0 $} \\
+      H_{\alpha - 1}(n + 1), \text{if $\operatorname{Succ}(\alpha)$} \\
+      H_{\alpha(n)}(n), \text{if $\operatorname{Lim}(\alpha)$}
+    \end{cases}$
+  \end{center}
+
+  The \emph{fast-growing hierarchy} $\{ F_{\alpha} \}_{\alpha < \varepsilon_0}$ is defined by recursion on $\alpha$:
+
+  \begin{center}
+    $F_{\alpha}(n) = \begin{cases}
+      n + 1, \text{if $\alpha = 0$} \\
+      F^{n + 1}_{\alpha - 1}(n), \text{if $\operatorname{Succ}(\alpha)$} \\
+      F_{\alpha(n)}(n), \text{if $\operatorname{Lim}(\alpha)$}
+    \end{cases}$
+  \end{center}
+  where $F^{n + 1}_{\alpha - 1}(n)$ is the $(n + 1)$-times iteration of $F_{\alpha - 1}$ on $n$.
+\end{definition}
+
+Note that $H_{\alpha}$ and $F_{\alpha}$ could be equivalently defined by purely number-theoretic means
+by working over the well-orderings $\prec_{\alpha}$ instead of working over ordinals directly. So $H_{\alpha}$ and
+$F_{\alpha}$ are $\varepsilon_0$-recursive.
+
+\begin{lemma}
+  For all $\alpha, \beta < \varepsilon_0$ and for all $n < \omega$,
+
+  \begin{enumerate}
+    \item $H_{\alpha + \beta}(n) = H_{\alpha}(H_{\beta}(n))$,
+    \item $H_{\omega^{\alpha}}(n) = F_{\alpha}(n)$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  The first part is proved by induction on $\beta$. If $\beta = 0$, then the equation trivially holds.
+  Assume $\operatorname{Succ}(\beta)$ and the induction hypothesis for $\beta -1$, then
+  we have:
+  \begin{center}
+    $H_{\alpha + \beta}(n) = H_{\alpha + (\beta - 1)}(n + 1) = H_{\alpha}(H_{\beta - 1}(n + 1)) = H_{\alpha}(H_{\beta}(n))$.
+  \end{center}
+
+  If $\operatorname{Lim}(\beta)$, then we have (by using the induction hypothesis for $\beta(n)$):
+  \begin{center}
+    $H_{\alpha + \beta}(n) = H_{\alpha + \beta(n)}(n) = H_{\alpha}(H_{\beta(n)}(n)) = H_{\alpha}(H_{\beta}(n))$.
+  \end{center}
+
+  The second part is proven by induction on $\alpha$. If $\alpha = 0$, then
+
+  \begin{center}
+    $H_{\omega^0}(n) = H_1(n) = n + 1 = F_0(n)$
+  \end{center}
+
+  If $\operatorname{Succ}(\alpha)$, then
+
+  \begin{center}
+    $H_{\omega^{\alpha}}(n) = H_{\omega^{\alpha - 1} \cdot (n + 1)}(n) = H^{n + 1}_{\omega^{\alpha - 1}}(n) = F^{n + 1}_{\alpha - 1}(n) = F_{\alpha}(n)$.
+  \end{center}
+
+  The limit case is immediate.
+\end{proof}
+
+\begin{lemma}
+  For each $\alpha < \varepsilon_0$, $H_{\alpha}$ is strictly increasing and $H_{\beta}(n) < H_{\alpha}(n)$
+  for $\beta \in \alpha[n]$. The same holds for $F_{\alpha}$ for $n \neq 0$, for when $n = 0$ we have $F_{\alpha}(0) = 1$
+  for each $\alpha$.
+\end{lemma}
+
+\begin{proof}
+  Induction on $\alpha$. The case $\alpha = 0$ is trivial since $H_0$ is the identity function and $0[n] = \emptyset$.
+  If $\operatorname{Succ}(\alpha)$, then $H_{\alpha}$ is $H_{\alpha - 1}$ composed with the successor function,
+  it is strictly increasing by the induction hypothesis. 
+  Take $\beta \in \alpha[n]$, then either $\beta \in (\alpha -1)[n]$ or $\beta = \alpha - 1$, thus, by using the induction hypothesis
+  \begin{center}
+    $H_{\beta}(n) \leq H_{\alpha - 1}(n) < H_{\alpha - 1}(n + 1) = H_{\alpha}(n)$.
+  \end{center}
+
+  If $\operatorname{Lim}(\alpha)$ then 
+  \begin{center}
+  $H_{\alpha}(n) = H_{\alpha(n)}(n) < H_{\alpha(n)}(n + 1)$
+  \end{center}
+  but $\alpha(n) \in \alpha[n + 1] = \alpha(n + 1)[n + 1]$, thus
+  \begin{center}
+    $H_{\alpha(n)}(n + 1) < H_{\alpha(n + 1)}(n + 1) = H_{\alpha}(n + 1)$
+  \end{center}
+  Thus $H_{\alpha}(n) < H_{\alpha}(n + 1)$. Furthermore if $b \in \alpha[n]$,
+  then $\beta \in \alpha(n)[n]$ so $H_{\beta}(n) < H_{\alpha(n)}(n) = H_{\alpha}(n)$ by the induction hypothesis
+  for $\alpha(n)$.
+
+  The same holds for $F_{\alpha} = H_{\omega^{\alpha}}$ since if $\beta \in \alpha[n]$ we then have
+  $\omega^{\beta} \in \omega^{\alpha}[n]$.
+\end{proof}
+
+\begin{lemma}
+If $\beta \in \alpha[n]$, then $F_{\beta+1}(m) \leq F_{\alpha}(m)$ for all $m \geq n$.
+\end{lemma}
+
+\begin{proof}
+Induction on $\alpha$. The zero case is trivial.
+If $\operatorname{Succ}(\alpha)$, then either $\beta \in (\alpha - 1)[n]$ or $\beta = \alpha - 1$. In either case
+we apply the induction hypothesis. If $\alpha$ is a limit, then we have $\beta \in \alpha(n)[n]$, so
+by induction hypothesis $F_{\beta + 1}(m) \leq F_{\alpha(n)}(m)$, but $F_{\alpha(n)}(m) \leq F_{\alpha}(m)$.
+\end{proof}
+
 \section{${\bf RCA}_0$}
 
 \section{${\bf WKL}_0$}
