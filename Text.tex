@@ -1370,6 +1370,97 @@ we apply the induction hypothesis. If $\alpha$ is a limit, then we have $\beta \
 by induction hypothesis $F_{\beta + 1}(m) \leq F_{\alpha(n)}(m)$, but $F_{\alpha(n)}(m) \leq F_{\alpha}(m)$.
 \end{proof}
 
+\subsection{$\alpha$-recursion and $\varepsilon_0$-recursion}
+
+\begin{definition}[\bf $\alpha$-recursion]
+  $ $
+
+  \begin{enumerate}
+    \item An \emph{$\alpha$-recursion} if a function definition of the following form, 
+    defining $f : \mathbb{N}^{k + 1} \to \mathbb{N}$ from functions $g_0, g_1, \dots, g_s$ by the following equations:
+    \begin{center}
+      $f(0, \vec{m}) = g_0(\vec{m})$
+
+      $f(n, \vec{m}) = T(g_1, \dots, g_s, f_{\prec n}, n, \vec{m})$ provided $n \geq 1$.
+    \end{center}
+    where $T(g_1, \dots, g_s, f_{\prec n}, n, \vec{m})$ is a fixed term built up from the number variables
+    $n$ and $\vec{m}$ by applying functions $g_1, \dots, g_s$ and the function $f_{\prec n}$ defined as
+    \begin{center}
+      $f_{\prec n}(n', \vec{m}) = \begin{cases}
+        f(n', \vec{m}), \text{if $n' \prec_{\alpha} n$} \\
+        0, \text{otherwise}
+      \end{cases}$
+    \end{center}
+    Note that it is assumed that $\alpha > 0$.
+    \item An \emph{unnested} $\alpha$ is one of the special form:
+
+    \begin{center}
+      $f(0, \vec{m}) = g_0(\vec{m})$
+
+      $f(n, \vec{m}) = g_1(n, \vec{m}, f(g_2(n, \vec{m}), \dots, g_{k + 1}(n, \vec{m})))$
+    \end{center}
+    with a single recursive call of $f$ where $g_2(n, \vec{m}) \prec_{\alpha} n$ for all $n$ and $\vec{m}$.
+    \item Let $\varepsilon_0(0) = \omega$ and $\varepsilon_0(i + 1) = \omega^{\varepsilon_0(i)}$.
+    For each particular $i$, a function is \emph{$\varepsilon_0(i)$-recursive} if it can be defined
+    from primitive recursive functions by successive substitutions and $\alpha$-recursions with 
+    $\alpha < \varepsilon_0(i)$. It is \emph{unnested $\varepsilon_0(i)$-recursive} if all the $\alpha$-recursions
+    are unnested. It is \emph{$\varepsilon_0$-recursive} if it is $\varepsilon_0(i)$-recursive for some (any) $i$.
+  \end{enumerate}
+\end{definition}
+
+\begin{lemma}[\bf Bounds for $\alpha$-recursion]
+  Let $f$ be a function defined from $g_1, \dots, g_s$ by an $\alpha$-recursion:
+  \begin{center}
+    $f(0, \vec{m}) = g_0(\vec{m})$
+
+    $f(n, \vec{m}) = T(g_1, \dots, g_s, f_{\prec n}, n, \vec{m})$
+  \end{center}
+  where for each $i \leq s$ $g_i(\vec{a}) < F_{\beta}(k + \max \vec{a})$ for all numerical arguments $\vec{a}$.
+  Then there is a constant $d$ such that for all $n$, $\vec{m}$
+  \begin{center}
+    $f(n, \vec{m}) < F_{\alpha + \beta}(k + 2 d + \max(n, \vec{m}))$.
+  \end{center}
+\end{lemma}
+Note that $\beta$ and $k$ are arbitrary constants, but it is assumed that the last exponent in the Cantor normal
+form of $\beta$ is $\geq$ the first exponent in the normal form of $\alpha$, so that $\beta + \alpha$ is in Cantor normal
+form by default.
+
+\begin{proof}
+  The constant $d$ will be actually the depth of nesting of the term $T$, where variables
+  have depth have depth $0$ and each compositional term $g(T_1, \dots, T_l)$ has depth greater than the
+  maximum depth of nesting of the subterms $T_j$.
+
+  Assume $n$ lies in the field of the well-ordering $\prec_{\alpha}$. 
+  Then $n = \overline{\gamma}$ for some $\gamma < \alpha$. Let us claim by induction on $\gamma$ that
+  \begin{center}
+    $f(n, \vec{m}) < F_{\beta + \gamma + 1}(k + 2 d+ \max(n, \vec{m}))$.
+  \end{center}
+  This is immediate when $n = 0$, because $g_0(\vec{m}) < F_{\beta}(k + \max \vec{m})$
+  and $F_{\beta}$ is strictly increasing and bounded by $F_{\beta + 1}$.
+  Assume $n \neq 0$ and assume the claim for all $n' = \vec{\delta}$ where $\delta < \gamma$.
+
+  Let $T'$ be any subterm of $T(g_1, \dots, g_s, f_{\prec n},n, \vec{m})$ with depth of nesting $d'$,
+  built up by application of one of the functions $g_1, \dots, g_s$ or $f_{\prec n}$ to subterms $T_1, \dots, T_l$.
+  Assume (for a sub-induction on $d'$) that each of these $T_j$'s has numerical value $v_j$ less that 
+  $F^{2 (d' - 1)}_{\beta + \gamma}(k + 2 d + \max(n, \vec{m}))$.
+
+  If $T'$ is obtained by application of one of the functions $g_i$ then its numerical value will be
+  \begin{center}
+    $g_i(v_1, \dots, v_l) < F_{\beta}(k + 2^{d'-1}_{\beta + \gamma})(k + 2 d + \max(n, \vec{m})) < F^{2 d'}_{\beta + \gamma}(k + 2 d + \max(n, \vec{m}))$
+  \end{center}
+  since $k < u$ then $F_{\beta}(k + u) < F_{\beta}(2 u) < F^2_{\beta}(u)$ provided $\beta \neq 0$. On the other hand,
+  if $T'$ is obtained by application of the function $f_{\prec n}$, its value will be $f(v_1, \dots, v_l)$
+  if $v_1 \prec_{\alpha} n$ or $0$ otherwise. Suppose $v_1 = \overline{\delta} \prec_{\alpha} \overline{\gamma}$.
+  So by the induction hypothesis:
+  \begin{center}
+    $f(v_1, \dots, v_l) < F_{\beta + \delta + 1}(k + 2 d + \max \vec{v}) \leq F_{\beta + \gamma}(k + 2 d + \max \vec{v})$
+  \end{center}
+  because $v_1$ is greater than the maximum coefficient of $\delta$, so $\delta \in \gamma[v_1]$, so
+  $\beta + \delta \in (\beta + \gamma)[v_1]$ and hence $F_{\beta + \gamma + 1}$ is bounded by $F_{\beta + \gamma}$
+  on arguments $\geq v_1$.
+  TODO: complete the proof
+\end{proof}
+
 \section{${\bf RCA}_0$}
 
 \section{${\bf WKL}_0$}
