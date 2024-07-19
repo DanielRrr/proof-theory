@@ -1457,9 +1457,150 @@ form by default.
   \end{center}
   because $v_1$ is greater than the maximum coefficient of $\delta$, so $\delta \in \gamma[v_1]$, so
   $\beta + \delta \in (\beta + \gamma)[v_1]$ and hence $F_{\beta + \gamma + 1}$ is bounded by $F_{\beta + \gamma}$
-  on arguments $\geq v_1$.
-  TODO: complete the proof
+  on arguments $\geq v_1$. Therefore insertingn the assumed bounds for the $v_j$, we have
+  \begin{center}
+    $F(v_1, \dots, v_l) < F_{\beta + \gamma}(k + 2d + F^{2(d' - 1)}_{\beta + \gamma}(k + 2d + \max(n, \vec{m})))$
+  \end{center}
+  and thus we have
+  \begin{center}
+    $f(v_1, \dots, v_l) < F^{2d'}_{\beta + \gamma}(k + 2d + \max(n, \vec{m}))$.
+  \end{center}
+  So we have just shown that the value of every subterms of $T$ with depth of nesting $d'$
+  is less than $F^{2d'}_{\beta + \gamma}(k + 2d + \max(n, \vec{m}))$. Applying this to $T$
+  itself with depth of nesting $d$ we obtain
+  \begin{center}
+    $f(n, \vec{m}) < F^{2d}_{\beta + \gamma}(k + 2d + \max(n, \vec{m})) < F_{\beta + \gamma + 1}(k+2d+\max(n,\vec{m}))$
+  \end{center}
+  So we have proved the claim.
+
+  Now we derive the result of the lemma. Assume $n = \overline{\gamma}$ lies in the field of
+  $\prec_{\alpha}$, then $\beta + \gamma \in (\beta + \alpha)[n]$ and thus
+  \begin{center}
+    $f(n, \vec{m}) < F_{\beta + \gamma + 1}(k + 2d + \max(n, \vec{m})) \leq F_{\beta + \alpha}(k + 2d + \max(n, \vec{m}))$.
+  \end{center}
+
+  If $n$ does not lie in the field of $\prec_{\alpha}$, then $f_{\prec n}$ is the constant zero function, and thus
+  in evaluating $f(n, \vec{m})$ by the term $T$ only applications of the $g_i$-functions are required.
+  Thus we have
+  \begin{center}
+    $f(n, \vec{m}) < F^{2d}_{\beta}(k + 2d + \max(n, \vec{m})) < F_{\beta + \alpha}(k + 2d + \max(n, \vec{m}))$.
+  \end{center}
+  since $\alpha$ is non-zero.
 \end{proof}
+
+\begin{theorem}
+  For each $i$, a function is $\varepsilon_0(i)$-recursive if and only if it is a register-machine computable
+  in a number of steps bounded by $F_{\alpha}$ for some $\alpha < \epsilon_0(i)$.
+\end{theorem}
+
+\begin{proof}
+
+  \begin{enumerate}
+    \item The "if" part.
+
+    If a function $g$ is register-machine computable, then there is an elementary function $U$ such that for all
+    arguments $\vec{m}$, if $s(\vec{m})$ bounds the number of steps required to compute $g(\vec{m})$,
+    then $g(\vec{m}) = U(\vec{m}, s(\vec{m}))$. So if $g$ is computable in a number of steps bounded by $F_{\alpha}$, then
+    $g$ can be defined from $F_{\alpha}$ by the following substitution
+    \begin{center}
+      $g(\vec{m}) = U(\vec{m}, F_{\alpha}(\max \vec{m}))$.
+    \end{center} 
+
+    So if $F_{\alpha}$ is $\varepsilon_0(i)$-recursive, so is $g$. Let us show that if $\alpha < \varepsilon_0(i)$ then
+    $F_{\alpha}$ is $\varepsilon_0(i)$-recursive.
+
+    The claim holds for $i = 0$ since then all $\alpha$'s are finite, but the finite levels of $F$ hierarchy
+    are primitive recursive and thus $\varepsilon_0(0)$-recursive. Since $i > 0$ and
+    $\alpha = \omega^{\gamma_1} \cdot c_1 + \dots + \omega^{\gamma_k} \cdot c_k < \varepsilon_0(i)$.
+    
+    Let us add one to each exponent and insert a successor term at the end, so we produce the ordinal $\beta = \alpha' + n$,
+    where $\alpha'$ is the limit $\omega^{\gamma_1 + 1} \cdot c_1 + \dots + \omega^{\gamma_k + 1} \cdot c_k$.
+    $i > 0$, so we have $\beta < \varepsilon_0(i)$. From the code of $\alpha$, denoted as $a$, we can compute the code
+    for $\alpha$, denoted as $a'$. So $b = \pi(a', \langle 0, n \rangle)$ is the code for $\beta$. And conversely, we are able
+    to decode $\alpha$, $\alpha'$ and $n$ from $\beta$. 
+
+    Let us choose a large enough $\delta < \varepsilon_0(i)$ such that $\beta < \delta$, let us define $f(b, m)$ by $\delta$-recursion
+    such that if $b$ is the code for $\beta = \alpha' + n$, then $f(b, m) = F^n_{\alpha}(m)$.
+    Let us expose the components from which $b$ is constructed as $b = (a, n)$, so we can define $f(a, n, m)$ using the elementary function
+    $h(a,n)$ that returns the code for $\alpha - 1$ for $\operatorname{Succ}(\alpha)$ or $\alpha(n)$ for $\operatorname{Lim}(\alpha)$:
+
+    \begin{center}
+    $f(a, n, m) = \begin{cases}
+      m + n, \text{$a = 0$ or $n = 0$} \\
+      f(h(a, m), m + 1, m), \text{if $\operatorname{Succ}(a)$ and $n = 1$} \\
+      f(h(a, m), 1, m), \text{if $\operatorname{Lim}(a)$ and $n = 1$} \\
+      f(a, 1, f(a, n - 1, m)), \text{if $n > 1$} \\
+      0, \text{otherwise}
+    \end{cases}$
+  \end{center}
+
+    Then $f$ is $\varepsilon_0(i)$-recursive and $F_{\alpha}(m) = f(\overline{\alpha}, 1, m)$, so 
+    $F_{\alpha}$ is $\varepsilon_0(i)$-recursive for every $\alpha < \varepsilon_0(i)$.
+    \item The "only if" part.
+
+    Note that the number of steps needed to compute a compositional term $g(T_1, \dots, T_l)$
+    is the sum of the numbers of steps needed to compute subterms $T_1, \dots, T_l$ plus the number of steps
+    required to compute $g(v_1, \dots, v_l)$ where $v_j$ is the value of $T_j$.
+
+    Furthermore, the values $v_j$ are bounded by the number of computation steps plus the maximal input. 
+    So we can compute a bound on the computation steps for any such term. 
+    Moreover, we can do that elementarily from given bounds for the input data. Now suppose
+    \begin{center}
+      $f(n, \vec{m}) = T(g_1, \dots, g_s, f_{\prec n}, n, \vec{m})$
+    \end{center}
+    is any recursion-step of an $\alpha$-recursion. So if we have bounding functions on the numbers
+    of steps to compute each of the $g_i$'s and we assume inductively that we already have a bound on the number
+    of steps to compute $f(n',-)$ for $n' \prec_{\alpha} n$. So we can elementarily estimate a bound on the steps to compute
+    $f(n, \vec{m})$. So for any function defined by an $\alpha$-recursion from functions $\vec{g}$, a bounding
+    function is also definable by $\alpha$-recursion by bounding functions for $\vec{g}$. 
+    We have the same for primitive recursion. All in all, every $\varepsilon_0(i)$-function is
+    register-machine computable in a number of steps bounded by some $F_{\gamma}$ for $\gamma < \varepsilon_0(i)$.
+  \end{enumerate}
+\end{proof}
+
+\begin{col}
+For each $i$, a function is $\varepsilon_0(i)$-recursive if and only if it is unnested $\varepsilon_0(i + 1)$-recursive.
+\end{col}
+
+\begin{proof}
+Every $\varepsilon_0(i)$-recursive function is computable in the number of steps bounded
+by $F_{\alpha} = H_{\omega^{\alpha}}$ where $\alpha < \varepsilon_0(i)$. Thus it is primitive recusrively definable
+from $H_{\omega^{\alpha}}$. But $H_{\omega^{\alpha}}$ itself is defined an unnested 
+$\omega^{\alpha}$-recursion and $\omega^{\alpha} < \varepsilon_0(i + 1)$. So arbitrarily nested 
+$\varepsilon_0(i)$-recursions are reducible to unnested $\varepsilon_0(i + 1)$-recursions.
+
+Conversely, assume $f$ is defined from functions $g_0, g_1, \dots, g_{k + 2}$ by an unnested $\alpha$-recursion where
+$\alpha < \varepsilon_0(i + 1)$:
+
+\begin{center}
+  $f(0, \vec{m}) = g_0(\vec{m})$
+
+  $f(n, \vec{m}) = g_1(n, \vec{m}, f(g_2(n, \vec{m}), \dots, g_{k + 2}(n, \vec{m})))$
+\end{center}
+with $g_2(n, \vec{m}) \prec_{\alpha} n$ for all $n$ and $\vec{m}$. Then the number of recursion-steps
+needed to compute $f(n, m)$ is $f'(n, \vec{m})$ where
+
+\begin{center}
+  $f'(0, \vec{m}) = 0$
+
+  $f'(n, \vec{m}) = 1 + f'(g_2(n,\vec{m}), \dots, g_{k + 2}(n, \vec{m}))$
+\end{center}
+and $f$ is thus definable from $g_2, \dots, g_{k + 2}$ by primitive recursion and bound for $f'$.
+Assume that the given functions $g_j$ are all primitive recursively definable from, and bounded by, $H_{\beta}$ where
+$\beta < \varepsilon_0(i + 1)$. Now let us provide bounds for $\alpha$-recursion and show that $f'(n, \vec{m})$
+is bounded by $H_{\beta \cdot \gamma}$ where $n = \overline{\gamma}$ since
+\begin{center}
+  $H_{\beta \cdot (\gamma + 1)}(x) = H_{\beta \cdot \gamma + \beta}(x) = H_{\beta \cdot \gamma}(H_{\beta}(x))$.
+\end{center}
+
+Thus $f$ is definable from $H_{\beta}$ and $H_{\beta \cdot \alpha}$. Clearly since 
+$\beta, \alpha < \varepsilon_0(i + 1)$ we can choose $\beta = \omega^{\beta'}$ and $\alpha = \omega^{\alpha'}$
+for $\alpha' \leq \beta' < \varepsilon_0(i)$. Thus $H_{\beta} = H_{\beta'}$ and 
+$H_{\beta \cdot \alpha} = F_{\beta' + \alpha'}$ where $\beta' + \alpha' < \varepsilon_0(i)$. 
+Therefore $f$ is $\varepsilon_0(i)$-recursive.
+\end{proof}
+
+\subsection{Provable recursiveness of $F_{\alpha}$ and $H_{\alpha}$}
 
 \section{${\bf RCA}_0$}
 
