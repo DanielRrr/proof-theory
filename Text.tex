@@ -1602,6 +1602,133 @@ Therefore $f$ is $\varepsilon_0(i)$-recursive.
 
 \subsection{Provable recursiveness of $F_{\alpha}$ and $H_{\alpha}$}
 
+In this subsection we will show that for every $\alpha < \varepsilon_0(i)$ for $i < \omega$,
+the function $F_{\alpha}$ is provably recursive in the theory ${\bf I}\Sigma_{i+1}$.
+
+The required machinery for coding ordinals below $\varepsilon_0$ is elementary, 
+so one can assume that it can be defined in ${\bf I}\Delta_0(exp)$. 
+We will make use of the function $h$ such that if $a$ codes a successor ordinal $\alpha$, then $h(a, n)$
+codes $\alpha - 1$ and $a$ codes a limit ordinal $\alpha$, then $h(a, n)$ codes $\alpha(n)$.
+One can decide whether $a$ codes a successor ordinal ($\operatorname{Succ}(\alpha)$) or a limit
+ordinal ($\operatorname{Lim}(\alpha)$) by asking whether $h(a, 0) = h(a, 1)$ or not. It is a bit easier
+to show the provable recursiveness of the Hardy functions $H_{\alpha}$ first of all since the Hardy functions
+are defined involving no nested recursion. After that one can conclude the provable recursiveness of
+the fast-growing hierarchy by using the equation $F_{\alpha} = H_{\omega^{\alpha}}$.
+
+\begin{definition}
+  Let $H(a, x, y, z)$ be a $\Delta_0(exp)$-formula of the following form:
+
+  \vspace{\baselineskip}
+
+  $\begin{array}{lll}
+    &(z)_0 = \langle 0, y \rangle \land \pi_2(z) = \langle a, x \rangle \land \: & \\
+    &\forall i<\operatorname{lh}(z) \:\: (\operatorname{lh}((z)_i) = 2 \land (i < 0 \to (z)_{i, 0} > 0 )) \: \land & \\
+    &\forall 0 < i < \operatorname{lh}(z) \:\: (\operatorname{Succ}((z)_{i, 0}) \to (z)_{i - 1, 0} = h((z)_{i, 0}, (z)_{i,1}) & \\
+    & \:\:\:\:\:\:\:\: \land (z)_{i - 1, 1} = (z)_{i, 1} + 1) \: \land & \\
+    &\forall 0 < i < \operatorname{lh}(z) \:\: (\operatorname{Lim}((z)_{i, 0}) \to (z)_{i - 1, 0} = h((z)_{i, 0}, (z)_{i, 1}) \land (z)_{i - 1, i} = (z)_{i, 1}) & 
+  \end{array}$
+\end{definition}
+
+\begin{lemma}[Definability of $H_{\alpha}$]
+$H_{\alpha}(n) = m$ iff $\exists z H(\overline{\alpha}, n, m, z)$ is true. For each $\alpha < \varepsilon_0$ one show
+\begin{center}
+  ${\bf I}\Sigma_1 \vdash \exists z H(\overline{\alpha}, x, y, z) \land \exists z H(\overline{\alpha}, x, y', z) \to y = y'$.
+\end{center}
+\end{lemma}
+ 
+\begin{proof}
+  The meaning of the formula $\exists z H(\overline{\alpha}, n, m, z)$ is that there is a finite
+  sequence of pairs $\langle \alpha_i, n_i \rangle$, beginning with $\langle 0, m \rangle$ and ending with 
+  $\langle \alpha, n \rangle$ such that at each $i > 0$ if $\operatorname{Succ}(\alpha_i)$ then 
+  $\alpha_{i - 1} = \alpha_i - 1$ and $n{i - 1} = n_i + 1$ and if $\operatorname{Lim}(\alpha_i)$ then
+  $\alpha_{i - 1} = \alpha_i(n_i)$ and $n_{i - 1} = n_i$.
+
+  Thus by induction up along the sequence and by using the original definition of $H_{\alpha}$
+  one can easily see that for each $i > 0$ $H_{\alpha_i}(n_i) = m$ and thus $H_{\alpha}(n) = m$.
+  But if $H_{\alpha}(n) = m$, then there exists a required computation sequence, so the first part of the lemma is shown.
+
+  As regards the second part, notice that one can show the following by induction for each $n,m,m',s,s'$
+  \begin{center}
+    $H(\overline{\alpha}, n, m, s) \to H(\overline{\alpha}, n, m', s') \to s = s' \land m = m'$
+  \end{center}
+  This proof can be formalised in ${\bf I}\Delta_0(exp)$ to give
+  \begin{center}
+    $H(\overline{\alpha}, x, y, z) \to H(\overline{\alpha}, x, y', z') \to z = z' \land y = y'$
+  \end{center}
+  and hence
+  $\exists z H(\overline{\alpha}, x, y, z) \to \exists z H(\overline{\alpha}, x, y', z') \to z = z' \land y = y'$
+\end{proof}
+
+\begin{lemma}
+  ${\bf I}\Delta_0(exp)$ proves the following formula
+  \begin{center}
+    $\exists z H(\omega^a, x,y,z) \to \exists z H(\omega^a c, y, w, z) \to \exists z H(\omega^a(c + 1), x, w, z)$
+  \end{center}
+  where $\omega^a c$ is the elementary term $\langle \langle a, c \rangle \rangle$ which constructs, from the code of
+  $\alpha$ the code for $\omega^{\alpha} \cdot c$.
+\end{lemma}
+
+\begin{proof}
+Assume we have sequences $s$ and $s'$ satisfying $H(\omega^{a}, x, y, s)$ and 
+$H(\omega^{a} c, x, y, s)$. Add $\omega^{a} c$ to the first component of each pair in $s$.
+Then the last pair in $s'$ and the last pair in $s$ are identical. We concatenate $s$ and $s'$ 
+by taking the repeating pair only once and construct an elementary term $t(s, s')$
+satisfying $H(\omega^a(c + 1), x, w, t)$. Then one can show
+\begin{center}
+  $H(\omega^a, x, y, s) \to H(\omega^a c, y, w, s') \to H(\omega^a(c + 1), x, w, t)$
+\end{center}
+in a conservative extension of ${\bf I}\Delta_0(exp)$ and thus derive the following in ${\bf I}\Delta_0(exp)$
+\begin{center}
+  $\exists z H(\omega^a, x, y, z) \to \exists z H(\omega^a c, y, w, z) \to \exists z H(\omega^a(c + 1), x, w, z)$.
+\end{center}
+\end{proof}
+
+\begin{lemma}
+  Let $H(a)$ be the $\Pi_2$-formula $\forall x \exists y \exists z H(a, x, y, z)$, then one can show the following by
+  $\Pi_2$-induction:
+  \begin{enumerate}
+    \item $H(\omega^0)$.
+    \item $\operatorname{Succ}(a) \to H(\omega^{h(a, 0)}) \to H(\omega^a)$.
+    \item $\operatorname{Lim}(a) \to \forall x H(\omega^{h(a, x)}) \to H(\omega^a)$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  The term $t_0 = \langle \langle 0, x + 1 \rangle, \langle 1, x \rangle \rangle$
+  witnesses $H(\omega^0, x, x + 1, t_0)$ in ${\bf I}\Delta_0(exp)$, so we have $H(\omega^0)$.
+
+  Further one can derive the following
+  \begin{center}
+    $H(\omega^{h(a, 0)}) \to H(\omega^{h(a, 0)c}) \to H(\omega^{h(a, 0)}(c + 1))$.
+  \end{center}
+
+  So we obtain by $\Pi_2$-induction
+  \begin{center}
+    $H(\omega^{h(a, 0)}) \to H(\omega^{h(a, 0)}(x + 1))$
+  \end{center}
+  and
+  \begin{center}
+    $H(\omega^{h(a, 0)}) \to \exists y \exists z H(\omega^{h(a, 0)}(x + 1), x,y,z)$.
+  \end{center}
+  But there is an elementary term $t_1$ with the property
+  \begin{center}
+    $\operatorname{Succ}(a) \to H(\omega^{h(a, 0)}(x + 1), x, y, z) \to H(\omega^a, x, y, t_1)$
+  \end{center}
+  as far as $t_1$ needs to tag on to the end of the sequence $z$ the new pair $\langle \omega^a, x \rangle$
+  and thus $t_1 = \pi (z, \langle \omega^a, x \rangle)$. Thus
+  \begin{center}
+    $\operatorname{Succ}(a) \to H(\omega^{h(a, 0)}) \to H(\omega^a)$.
+  \end{center}
+  The final case is straightforward, we have
+  \begin{center}
+    $\operatorname{Lim}(a) \to H(\omega^{h(a, x)}, x, y, z) \to H(\omega^a, x, y, t_1)$
+  \end{center}
+  and so by the Bernays rules we have
+  \begin{center}
+    $\operatorname{Lim}(a) \to \forall x H(\omega^{a, x}) \to H(\omega^a)$.
+  \end{center}
+\end{proof}
+
 \section{${\bf RCA}_0$}
 
 \section{${\bf WKL}_0$}
