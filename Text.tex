@@ -493,15 +493,15 @@ for each $\vec{n} = (n_1, \dots, n_k)$.
 \begin{lemma}~\label{truth:idelta0}
   Let $\Gamma(\vec{x})$ be a finite set of $\Sigma_1$ formulas such that 
   \begin{center}
-  ${\bf I}\Delta_0(exp) \vdash \bigvee \limits_{\gamma(\vec{x}) \in \Gamma(\vec{x})} \gamma(\vec{x})$.
+  ${\bf I}\Delta_0(\operatorname{exp}) \vdash \bigvee \limits_{\gamma(\vec{x}) \in \Gamma(\vec{x})} \gamma(\vec{x})$.
   \end{center}
   Then there is an elementary function $f$ such that $f \models \Gamma(\vec{x})$ and $f$ is strongly increasing on its variables.
 \end{lemma}
 
 \begin{proof}
 
-  If $\Gamma$ is provable in ${\bf I}\Delta_0(exp)$, 
-  then it is provable in the Tait-style version of ${\bf I}\Delta_0(exp)$, where all cut formulas are $\Sigma_1$.
+  If $\Gamma$ is provable in ${\bf I}\Delta_0(\operatorname{exp})$, 
+  then it is provable in the Tait-style version of ${\bf I}\Delta_0(\operatorname{exp})$, where all cut formulas are $\Sigma_1$.
 
   If $\Gamma$ is classically derivable from non-logical axioms $A_1, \dots, A_s$, then there is a cut-free proof
   in the Tait calculus of $\neg A_1, \Delta, \Gamma$, where $\Delta = \neg A_2, \dots, \neg A_s$. Let us show how to cancel $\neg A_1$ using a $\Sigma_1$-cut.
@@ -612,18 +612,18 @@ for each $\vec{n} = (n_1, \dots, n_k)$.
 \end{proof}
 
 \begin{theorem}
-  A number-theoretic function is elementary iff $f$ is provably $\Sigma_1$ in ${\bf I}\Delta_0(exp)$.
+  A number-theoretic function is elementary iff $f$ is provably $\Sigma_1$ in ${\bf I}\Delta_0(\operatorname{exp})$.
 \end{theorem}
 
 \begin{proof}
   The only if part is in Theorem~\ref{provablysigma1:1}, so we show the if part only.
-  Assume $f$ is provably $\Sigma_1$ in ${\bf I}\Delta_0(exp)$. Then we have a formula
+  Assume $f$ is provably $\Sigma_1$ in ${\bf I}\Delta_0(\operatorname{exp})$. Then we have a formula
   \begin{center}
     $F(\vec{x}, y) = \exists z_1 \dots \exists z_k B(\vec{x}, y, z_1, \dots, z_k)$
   \end{center}
   which defines $f$ and such that
   \begin{center}
-  ${\bf I}\Delta_0(exp) \models \exists y F(\vec{x}, y)$
+  ${\bf I}\Delta_0(\operatorname{exp}) \models \exists y F(\vec{x}, y)$
   \end{center}
   By Lemma~\ref{truth:idelta0}, there exists an elementary function $g$ such that for every
   tuple of arguments $\vec{n}$ there are numbers $m_0, \dots, m_k$
@@ -641,7 +641,7 @@ for each $\vec{n} = (n_1, \dots, n_k)$.
     $f(\vec{n}) = (\mu_{m < h(\vec{n})} B(\vec{n}, (m)_0, (m)_1, \dots, (m)_k))_0$.
   \end{center}
 
-  $B$ is a bounded formula of ${\bf I}\Delta_0(exp)$, $B$ is elementarily 
+  $B$ is a bounded formula of ${\bf I}\Delta_0(\operatorname{exp})$, $B$ is elementarily 
   decidable. Moreover, elementary functions are closed under composition and bounded minimisation,
   so $f$ is elementary.
 \end{proof}
@@ -665,7 +665,7 @@ restructed to $\Sigma_1$ formulas.
   \end{enumerate}
 
   In each case $C(\vec{x}, y, z)$ will be a $\Delta_0(exp)$-formula
-  constructed via sequence encoding in ${\bf I}\Delta_0(exp)$.
+  constructed via sequence encoding in ${\bf I}\Delta_0(\operatorname{exp})$.
   Such a formula expresses that $z$ is a uniquely determined sequence number encoding the computation of
   $f(\vec{x}) = y$ and containing the output value $y$ as its final element, so $y = \pi_2(z)$.
 
@@ -794,7 +794,7 @@ restructed to $\Sigma_1$ formulas.
 \end{definition}
 
 Note that we have the persistence property for $\models$ 
-which completely repeats persistence for ${\bf I}\Delta_0(exp)$.
+which completely repeats persistence for ${\bf I}\Delta_0(\operatorname{exp})$.
 
 We shall be using a Tait-style formalisation of ${\bf I}\Sigma_0$ where the induction rule
 
@@ -861,7 +861,7 @@ a primitive recursive function satisfying $f \models \Gamma$.
     \UnaryInfC{$\Gamma, \forall y B(y)$}
   \end{prooftree}
   where $y$ is not free in $\Gamma$. As far as all formulas are $\Sigma_1$, $\forall y B(y)$ 
-  must be ${\bf I}\Delta_0(exp)$, so $B(y) \eqcirc \neg(y < t) \lor B'(y)$ for some elemetary or primitive recursive term $t$.
+  must be ${\bf I}\Delta_0(\operatorname{exp})$, so $B(y) \eqcirc \neg(y < t) \lor B'(y)$ for some elemetary or primitive recursive term $t$.
   Assume we have $f_0 \models \Gamma, \neg(y < t) \lor B'(y)$ for some increasing primitive recursive function $f_0$.
   Then, for any assignments $\vec{x} \mapsto \vec{n}$ and $y \mapsto k$, we have
   \begin{center}
@@ -1260,7 +1260,7 @@ coefficient of $\beta$ and greater than the codes $\overline{\beta_i}$ of all it
 \end{proof}
 
 The moral is that the principles of transfinite induction and recursion over the initials segments of ordinals below
-$\varepsilon_0$ can be expressed by means of ${\bf I}\Delta_0(exp)$.
+$\varepsilon_0$ can be expressed by means of ${\bf I}\Delta_0(\operatorname{exp})$.
 
 \subsection{Introducing the fast-growing hierarchy}
 
@@ -1606,7 +1606,7 @@ In this subsection we will show that for every $\alpha < \varepsilon_0(i)$ for $
 the function $F_{\alpha}$ is provably recursive in the theory ${\bf I}\Sigma_{i+1}$.
 
 The required machinery for coding ordinals below $\varepsilon_0$ is elementary, 
-so one can assume that it can be defined in ${\bf I}\Delta_0(exp)$. 
+so one can assume that it can be defined in ${\bf I}\Delta_0(\operatorname{exp})$. 
 We will make use of the function $h$ such that if $a$ codes a successor ordinal $\alpha$, then $h(a, n)$
 codes $\alpha - 1$ and $a$ codes a limit ordinal $\alpha$, then $h(a, n)$ codes $\alpha(n)$.
 One can decide whether $a$ codes a successor ordinal ($\operatorname{Succ}(\alpha)$) or a limit
@@ -1651,7 +1651,7 @@ $H_{\alpha}(n) = m$ iff $\exists z H(\overline{\alpha}, n, m, z)$ is true. For e
   \begin{center}
     $H(\overline{\alpha}, n, m, s) \to H(\overline{\alpha}, n, m', s') \to s = s' \land m = m'$
   \end{center}
-  This proof can be formalised in ${\bf I}\Delta_0(exp)$ to give
+  This proof can be formalised in ${\bf I}\Delta_0(\operatorname{exp})$ to give
   \begin{center}
     $H(\overline{\alpha}, x, y, z) \to H(\overline{\alpha}, x, y', z') \to z = z' \land y = y'$
   \end{center}
@@ -1660,7 +1660,7 @@ $H_{\alpha}(n) = m$ iff $\exists z H(\overline{\alpha}, n, m, z)$ is true. For e
 \end{proof}
 
 \begin{lemma}
-  ${\bf I}\Delta_0(exp)$ proves the following formula
+  ${\bf I}\Delta_0(\operatorname{exp})$ proves the following formula
   \begin{center}
     $\exists z H(\omega^a, x,y,z) \to \exists z H(\omega^a c, y, w, z) \to \exists z H(\omega^a(c + 1), x, w, z)$
   \end{center}
@@ -1677,7 +1677,7 @@ satisfying $H(\omega^a(c + 1), x, w, t)$. Then one can show
 \begin{center}
   $H(\omega^a, x, y, s) \to H(\omega^a c, y, w, s') \to H(\omega^a(c + 1), x, w, t)$
 \end{center}
-in a conservative extension of ${\bf I}\Delta_0(exp)$ and thus derive the following in ${\bf I}\Delta_0(exp)$
+in a conservative extension of ${\bf I}\Delta_0(\operatorname{exp})$ and thus derive the following in ${\bf I}\Delta_0(\operatorname{exp})$
 \begin{center}
   $\exists z H(\omega^a, x, y, z) \to \exists z H(\omega^a c, y, w, z) \to \exists z H(\omega^a(c + 1), x, w, z)$.
 \end{center}
@@ -1695,7 +1695,7 @@ in a conservative extension of ${\bf I}\Delta_0(exp)$ and thus derive the follow
 
 \begin{proof}
   The term $t_0 = \langle \langle 0, x + 1 \rangle, \langle 1, x \rangle \rangle$
-  witnesses $H(\omega^0, x, x + 1, t_0)$ in ${\bf I}\Delta_0(exp)$, so we have $H(\omega^0)$.
+  witnesses $H(\omega^0, x, x + 1, t_0)$ in ${\bf I}\Delta_0(\operatorname{exp})$, so we have $H(\omega^0)$.
 
   Further one can derive the following
   \begin{center}
@@ -1727,6 +1727,150 @@ in a conservative extension of ${\bf I}\Delta_0(exp)$ and thus derive the follow
   \begin{center}
     $\operatorname{Lim}(a) \to \forall x H(\omega^{a, x}) \to H(\omega^a)$.
   \end{center}
+\end{proof}
+
+\begin{definition}[Structural transifinite induction]
+
+  The \emph{structural progressiveness} of a formula $A(a)$ is expressed by $\operatorname{SProg}_a A$, which
+  is the conjunction of the formulas $A(0)$, $\forall a (\operatorname{Succ}(a) \to A(h(a, 0)) \to A(a))$ and
+  $\forall a (\operatorname{Lim}(a) \to \forall x A(h(a, x)) \to A(a))$.
+
+  The principle of \emph{structural transfinite induction} up to an ordinal $\alpha$ is the following axiom schema, for
+  all formulas $A$:
+  \begin{center}
+    $\operatorname{SProg}_a A \to \forall a \prec \overline{\alpha} A(a)$
+  \end{center}
+  where $a \prec \overline{\alpha}$ means $a$ lies in the field of the well-ordering $\prec_{\alpha}$, i.e.
+  $a = 0 \lor 0 \prec_{\alpha} a$.
+\end{definition}
+In particular, the previous lemma shows that the $\Pi_2$-formula $H(\omega^a)$ is structurally progressive
+and one can show that with $\Pi_2$-induction.
+
+\begin{definition}[Transfinite Induction]
+
+  The (general) \emph{progressiveness} of a formula $A(a)$ is
+  \begin{center}
+    $\operatorname{Prog}_a A := \forall a (\forall b \prec a A(b) \to A(a))$
+  \end{center}
+
+  The principle of a \emph{transfinite induction} up to an ordinal $\alpha$ is the schema
+  \begin{center}
+    $\operatorname{Prog}_a A \to \forall a \prec \overline{\alpha} A (a)$
+  \end{center}
+  where $a \prec \overline{\alpha}$ means that $a$ lies in the field of the well-ordering
+  $\prec_{\alpha}$.
+\end{definition}
+
+\begin{lemma}
+  Structural transfinite induction up to $\alpha$ is derivable from transfinite induction up to $\alpha$.
+\end{lemma}
+
+\begin{proof}
+  Let $A$ be an arbitrary formula and assume $\operatorname{SProg}_a A$. Let us show
+  $\forall a \prec \overline{\alpha} A(a)$. Let us transfinite induction for the formula 
+  $a \prec \overline{\alpha} \to A(a)$, then it is sufficient to prove the following
+  \begin{center}
+    $\forall a (\forall b \prec a, \overline{\alpha} A(b) \to a \prec \overline{\alpha} \to A(a))$
+  \end{center}
+  which is equivalent to
+  \begin{center}
+    $\forall a \prec \overline{\alpha} (\forall b \prec a A(b) \to A(a))$.
+  \end{center}
+  The latter is proved from $\operatorname{SProg}_a A$ and the properties of the $h$ function.
+\end{proof}
+
+We also have induction over an arbitrary well-ordered set as a consequence. 
+Comparisons are made using a ``measure function'' $\mu$ into an initial segment of the ordinals. 
+The principle of ``general induction'' up to $\alpha$ is
+\begin{center}
+  $\operatorname{Prog}^{\mu}_x A(x) \to \forall x (\mu(x) \prec \overline{\alpha} \to A(x))$
+\end{center}
+where $\operatorname{Prog}^{\mu}_x A(x)$ expresses ``$\mu$-progressiveness'' with respect to the measure function $\mu$
+and the ordering $\prec_{\alpha}$
+\begin{center}
+  $\operatorname{Prog}^{\mu}_x A(x) := \forall a (\forall y (\mu(y) \prec a \to A(y) \to \forall x (\mu(x) = a \to A(x))))$
+\end{center}
+
+We claim that general induction up to an ordinal $\alpha$ is provable from transfinite
+induction up to $\alpha$. Indeed, assume $\operatorname{Prog}^{\mu}_x A(x)$. Let us show 
+$\forall x (\mu(x) \prec \overline{\alpha} \to A(x))$. Consider $B(a) := \forall x(\mu(x) = a \to A(x))$.
+It it sufficient to prove $\forall a \prec \overline{\alpha}B(a)$, which is 
+$\forall a \prec \overline{\alpha} \forall x (\mu(x) = a \to A(x))$. By transfinite induction it is sufficient to
+prove $\operatorname{Prog}_a B$, which is, in turn,
+\begin{center}
+  $\forall a (\forall b \prec a \forall y (\mu(y) = b \to A(y) \to \forall x (\mu(x) = a \to A(x))))$
+\end{center}
+
+But that follows from the assumption $\operatorname{Prog}^{\mu}_x A(x)$.
+
+\subsection{Gentzen's theorem on transfinite induction in $\operatorname{PA}$}
+
+We make use of Gentzen's result on the provability of transfinite induction up $\varepsilon_0$
+to complete provable recursiveness of $H_{\alpha}$ and $F_{\alpha}$.
+We will need some properties of $\prec$ and $\oplus$, the elementary function on ordinal codes
+such that $\overline{\alpha} \oplus \overline{\beta} = \overline{\alpha + \beta}$.
+
+\begin{lemma}~\label{plus:code} The following facts are provable in ${\bf I}\Delta_0(\operatorname{exp})$:
+
+  \begin{enumerate}
+    \item $a \prec 0 \to A$,
+    \item~\label{plus:code:2} $c \prec b \oplus \omega^0 \to (c \prec b \to A) \to (c = b \to A) \to A$,
+    \item~\label{plus:code:3} $a \oplus 0 = 0 \oplus a = a$,
+    \item~\label{plus:code:4} $a \oplus (b \oplus c) = (a \oplus b) \oplus c$,
+    \item~\label{plus:code:5} $\omega^a 0 = 0$,
+    \item~\label{plus:code:6} $\omega^a(x + 1) = \omega^a x \oplus \omega^a$,
+    \item~\label{plus:code:7} $a \neq 0 \to c \prec b \oplus \omega^a \to c \prec b \oplus w^{{\bf e}(a, b,c)} {\bf m}(a, b, c)$,
+    \item~\label{plus:code:8} $a \neq c \to c \prec b \oplus \omega^a \to {\bf e}(a, b, c) \prec a$.
+  \end{enumerate}
+  where ${\bf e}$ and ${\bf m}$ denote appropriate elementary function constants.
+\end{lemma}
+
+\begin{theorem}[Gentzen, Parsons]
+
+  For every $\Pi_2$-formula $F$ and each $i > 0$ we can prove in ${\bf I}\Sigma_{i + 1}$ the 
+  principle of transfinite induction up to $\alpha$ for all $\alpha < \varepsilon_0(i)$.
+\end{theorem}
+
+\begin{proof}
+  Let $A(a)$ be a $\Pi_j$ formula, let
+  \begin{center}
+    $A^+(a) := \forall b (\forall c \prec b A(c) \to \forall c \prec b \oplus \omega^a A(c))$
+  \end{center}
+  $A$ is $\Pi_j$, then by reduction to prenex form, $A^+$ is equivalent to a
+  $\Pi_{j + 1}$-formula. The crucial point is that
+  \begin{center}
+    ${\bf I}\Sigma_j \vdash \operatorname{Prog}_a A(a) \to \operatorname{Prog}^+_a A(a)$.
+  \end{center}
+  Assume $\operatorname{Prog}_a A(a)$, i.e. $\forall a (\forall b \prec a A(b) \to A(a))$ and
+  $\forall b \prec a A^{+}(b)$. We have got to show $A^+(a)$.
+  So assume $\forall c \prec b A(c)$ and $c \prec b \oplus \omega^a$. Let us show $A(c)$.
+
+  Let $a = 0$, then $c \prec b \oplus \omega^0$. By Lemma~\ref{plus:code}.~\ref{plus:code:2}, it
+  is sufficient to derive $A(c)$ from $c \prec b$ as well as from $a = b$.
+  If $c \prec b$, then $A(c)$ follows from $\forall c \prec b A(c)$ by quantifier elimination. If
+  $c = b$, then $A(c)$ follows from $\operatorname{Prog}_a A(a)$ and $\forall c \prec b A(c)$.
+
+  Assume $a \neq 0$ and $c \prec b \oplus \omega^a$, then we obtain the following by Lemma~\ref{plus:code}.~\ref{plus:code:7}
+  \begin{center}
+  $c \prec b \oplus \omega^{{\bf e}(a, b, c)}{\bf m}(a, b, c)$
+  \end{center}
+  and ${\bf e}(a, b, c)$ by Lemma~\ref{plus:code}.~\ref{plus:code:8}. From $\forall b \prec a A^{+}(b)$
+  we get $A^+({\bf e}(a, b, c))$. By the definition of $A^+$ we have
+  \begin{center}
+    $\forall u \prec b \oplus \omega^{{\bf e}(a,b,c)} x \:\: A(u) 
+    \to \forall u \prec (b \oplus \omega^{{\bf e}(a,b,c)} x) \oplus \omega^{{\bf e}(a, b, c) A(u)}$.
+  \end{center}
+  By using Lemma~\ref{plus:code}.~\ref{plus:code:4} and Lemma~\ref{plus:code}.~\ref{plus:code:6} we obtain
+  \begin{center}
+    $\forall u \prec b \oplus \omega^{{\bf e}(a,b,c)} x A (u)
+    \to \forall u \prec (b \oplus \omega^{{\bf e}(a,b,c)}x) \oplus \omega^{{\bf e}(a, b, c)} A(u)$.
+  \end{center}
+  So we obtain by $\forall c \prec b A(c)$, Lemma~\ref{plus:code}.~\ref{plus:code:3} and Lemma~\ref{plus:code}.~\ref{plus:code:5}
+  \begin{center}
+    $\forall u \prec b \oplus \omega^{{\bf e}(a,b,c)}0 A(u)$
+  \end{center}
+  So by $\Pi_j$-induction we conclude $\forall u \prec b \oplus \omega^{{\bf e}(a,b,c)} {\bf m}(a,b,c) A(u)$
+  and thus $A(c)$. Thus ${\bf I}\Sigma_j \vdash \operatorname{Prog}_a A(a) \to \operatorname{Prog}_a A^+(a)$.
 \end{proof}
 
 \section{${\bf RCA}_0$}
