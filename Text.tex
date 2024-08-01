@@ -1867,11 +1867,80 @@ such that $\overline{\alpha} \oplus \overline{\beta} = \overline{\alpha + \beta}
   \end{center}
   So we obtain by $\forall c \prec b A(c)$, Lemma~\ref{plus:code}.~\ref{plus:code:3} and Lemma~\ref{plus:code}.~\ref{plus:code:5}
   \begin{center}
-    $\forall u \prec b \oplus \omega^{{\bf e}(a,b,c)}0 A(u)$
+    $\forall u \prec b \oplus \omega^{{\bf e}(a,b,c)}0 \:\: A(u)$
   \end{center}
   So by $\Pi_j$-induction we conclude $\forall u \prec b \oplus \omega^{{\bf e}(a,b,c)} {\bf m}(a,b,c) A(u)$
   and thus $A(c)$. Thus ${\bf I}\Sigma_j \vdash \operatorname{Prog}_a A(a) \to \operatorname{Prog}_a A^+(a)$.
+
+  Take $i > 0$ and let $\prec$ denote the well-ordering $\prec_{\varepsilon_0(i)}$.
+  Let $F(v)$ be $\Pi_2$-formula, define $A(a)$ to be $\forall v \prec a \: F(v)$. Thus $A$ is also $\Pi_2$
+  and also the implication $\operatorname{Prog}_vF(v) \to \operatorname{Prog}_a A(a)$ is derivable
+  in ${\bf I}\Delta_0(\operatorname{exp})$. Let us iterate the above procedure $i$ times starting with $j = 2$,
+  we obtain the formulas $A^+, A^{++}, \ldots, A^{(i)}$, where $A^{(i)}$ is $\Pi_{i + 2}$ and
+  \begin{center}
+    ${\bf I}\Sigma_{i + 1} \vdash \operatorname{Prog}_v F(v) \to \operatorname{Prog}_u A^{(i)} (u)$.
+  \end{center}
+
+  Fix $\alpha < \varepsilon_0(i)$ and choose $k$ such that $\alpha \leq \varepsilon_0(i)(k)$. Apply the progressiveness
+  of $A^{(i)}(u)$ $k + 1$ times, we obtain $A^{(i)}(\overline{k + 1})$. Thus
+  \begin{center}
+    ${\bf I}\Sigma_{i + 1} \vdash \operatorname{Prog}_v F(v) \to A^{(i)} (\overline{k + 1})$.
+  \end{center}
+  Let us instantiate the outermost universally quantified variable of $A^{(i)}$ to zero to obtain
+  \begin{center}
+  $A^{(i)}(\overline{k + 1}) \to A^{(i - 1)}(\omega^{\overline{ k + 1}})$.
+  \end{center}
+  Again, let us instantiate the outermost universally quantified variable in $A^{(i - 1)}$ to obtain
+  \begin{center}
+    $A^{(i - 1)}(\omega^{\overline{k + 1}}) \to A^{(i - 2)}(\omega^{\omega^{\overline{k + 1}}})$.
+  \end{center}
+  Continue this way and note that $\varepsilon_0(i)(k)$ consists of an exponential stack of $i$ $\omega$'s
+  with $k + 1$ on the top, we finally get down to
+  \begin{center}
+    ${\bf I}\Sigma_{i + 1} \vdash \operatorname{Prog}_v F(v) \to A(\overline{\varepsilon_0(i)(k)})$.
+  \end{center}
+  But $A(\overline{\varepsilon_0(i)(k)})$ is just 
+  \begin{center}
+  $\forall v \prec \overline{\varepsilon_0(i)(k)} F(v)$.
+  \end{center}
+  We thus have proved the transfinite induction principle for $F$ up to 
+  $\varepsilon_0(i)(k)$ in ${\bf I}\Sigma_{i + 1}$ and thus up to $\alpha$.
 \end{proof}
+
+\begin{theorem}
+  For each $i$ and for every $\alpha < \varepsilon_0(i)$, the fast-growing function $F_{\alpha}$
+  is provably recursive in ${\bf I}\Sigma_{i + 1}$.
+\end{theorem}
+
+\begin{proof}
+  If $i = 0$, then $\alpha$ is finite and $F_{\alpha}$ is primitive recursive and thus
+  $F_{\alpha}$ is provably recursive in ${\bf I}\Sigma_1$. Suppose $i > 0$. 
+  As far as $F_{\alpha} = H_{\omega^{\alpha}}$, we need to show that for every 
+  $\alpha < \varepsilon_0(i)$ that $H_{\omega^{\alpha}}$ is provably recursive in ${\bf I}\Sigma_{i + 1}$.
+  The lemma above shows that the defining $\Pi_2$-formula $H(\omega^a)$ is provably (structurally) progressive
+  in ${\bf I}\Sigma_2$. Thus, by, Gentzen's result
+  \begin{center}
+    ${\bf I}\Sigma_{i + 1} \vdash \forall a \prec \overline{\alpha} \:\: H(\omega^a)$.
+  \end{center}
+  Apply the progressiveness and obtain
+  \begin{center}
+    ${\bf I}\Sigma_{i + 1} \vdash H(\omega^{\overline{\alpha}})$
+  \end{center}
+  Thus ${\bf I}\Sigma_{i + 1}$ proves the $\Sigma_1$-definability of $H_{\omega^{\alpha}}$.
+\end{proof}
+
+\begin{col}
+  Any $\varepsilon_0(i)$-recursive function is provably recursive in ${\bf I}\Sigma_{i + 1}$.
+\end{col}
+
+\begin{proof}
+  We have already showed that each $\varepsilon_0(i)$-recursive function is register-machine computable
+  in a number of steps bounded by some $F_{\alpha}$ with $\alpha < \varepsilon_0(i)$.
+  Thus each such function is primitive recursively in ${\bf I}\Sigma_{i + 1}$. Thus we can show the
+  $\Sigma_1$-definability of all $\varepsilon_0(i)$-recursive functions.
+\end{proof}
+
+\subsection{Ordinal bounds for provable recursion in $\operatorname{PA}$}
 
 \section{${\bf RCA}_0$}
 
