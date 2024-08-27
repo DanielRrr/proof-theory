@@ -1942,6 +1942,90 @@ such that $\overline{\alpha} \oplus \overline{\beta} = \overline{\alpha + \beta}
 
 \subsection{Ordinal bounds for provable recursion in $\operatorname{PA}$}
 
+\subsection{The Infinitary System}
+
+In this section we will be dealing with the infinitary system with 
+sequents of the form $n : N \vdash^{\alpha} \Gamma$ where
+\begin{enumerate}
+  \item $n : N$ is an atomic formula declaring a bound on numerical inputs from
+  which terms appearing in $\Gamma$ are computed according to the $N$-rules and axioms.
+  \item $\Gamma$ is any finite set of closed formulas either of the form
+  $m : N$ or formulas in the language of arithmetic based on the standard arithmetic signature.
+  \item Ordinals $\alpha, \beta, \gamma, \cdots$ denote the heights of derivations.
+  \item Note that any occurence of a number $n$ in a formula in such sequents 
+  is the corresponding numeral.
+\end{enumerate}
+
+The system is axiomatised with the following inference rules:
+
+\begin{prooftree}
+  \AxiomC{$\alpha < \varepsilon_0$}
+  \AxiomC{$m \leq n + 1$}
+  \BinaryInfC{$n : N \vdash^{\alpha} \Gamma, m : N$}
+\end{prooftree}
+
+Let $\beta, \beta' \in \alpha[n]$:
+\begin{prooftree}
+  \AxiomC{$n : N \vdash^{\beta} n' : N$}
+  \AxiomC{$n' : N \vdash^{\beta'}$}
+  \BinaryInfC{$n : N \vdash^{\alpha} \Gamma$}
+\end{prooftree}
+
+Let $\Gamma$ be a context with a true atom, then:
+\begin{prooftree}
+  \AxiomC{$ $}
+  \UnaryInfC{$n : N \vdash^{\alpha} \Gamma$}
+\end{prooftree}
+
+Let $\beta \in \alpha[n]$:
+\begin{prooftree}
+  \AxiomC{$n : N \vdash^{\beta} \Gamma, A, B $}
+  \UnaryInfC{$n : N \vdash^{\alpha} \Gamma, A \lor B$}
+\end{prooftree}
+
+Let $\beta, \beta' \in \alpha[n]$:
+\begin{prooftree}
+  \AxiomC{$n : N \vdash^{\beta} \Gamma, A$}
+  \AxiomC{$n : N \vdash^{\beta'} \Gamma, B$}
+  \BinaryInfC{$n : N \vdash^{\alpha} \Gamma, A \land B$}
+\end{prooftree}
+
+For $\beta, \beta' \in \alpha[n]$:
+\begin{prooftree}
+  \AxiomC{$n : N \vdash^{\beta} m : N$}
+  \AxiomC{$n : N \vdash^{\beta'} \Gamma, A(m)$}
+  \BinaryInfC{$n : N \vdash^{\alpha} \Gamma, \exists x A(x)$}
+\end{prooftree}
+
+Let $\beta_i \in \alpha[\max(n, i)]$ for each $i$:
+\begin{prooftree}
+  \AxiomC{$i < \omega$}
+  \AxiomC{$\max(n, i) : N \vdash^{\beta_i} \Gamma, A(i)$}
+  \BinaryInfC{$n : N \vdash^{\alpha} \Gamma, \forall x A(x)$}
+\end{prooftree}
+
+Let $\beta, \beta' \in \alpha[n]$, then:
+\begin{prooftree}
+  \AxiomC{$n : N \vdash^{\beta} \Gamma, C$}
+  \AxiomC{$n : N \vdash^{\beta'} \Gamma', \neg C$}
+  \BinaryInfC{$n : N \vdash^{\alpha} \Gamma, \Gamma'$}
+\end{prooftree}
+
+\begin{definition}
+
+  The functions $B_{\alpha}$ are defined by recursion:
+
+  \begin{enumerate}
+    \item $B_0(n) = n + 1$
+    \item $B_{\alpha + 1}(n) = B_{\alpha}(B_{\alpha} (n))$
+    \item $B_{\lambda}(n) = B_{\lambda(n)}(n)$
+  \end{enumerate}
+  where $\lambda$ denotes any limit ordinal with assigned fundamental sequence $\lambda(n)$.
+\end{definition}
+
+At successor stages $B_{\alpha}$ is composed with itself once, comparison with the fast-growing 
+$F_{\alpha}$ shows that $B_{\alpha}(n) \leq F_{\alpha}(n)$
+
 \section{${\bf RCA}_0$}
 
 \section{${\bf WKL}_0$}
