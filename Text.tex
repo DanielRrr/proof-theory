@@ -2054,6 +2054,19 @@ $B_{\beta}(n) < B_{\alpha}(n)$ whenever $\beta \in \alpha[n]$.
   \end{enumerate}
 \end{proof}
 
+\begin{definition}
+  A sequent $n : N \vdash^{\alpha} \Gamma$ is \emph{term controlled} if every closed
+  term from $\Gamma$ has a numerical value bounded by $B_{\alpha}(n)$. An infinitary derivation is \emph{term controlled}
+  if every of its sequents is term controlled.
+\end{definition}
+
+\begin{lemma}
+  Let $\Gamma$ be a set of $\Sigma_1$-formulas or atoms of the form $m : N$. If $n : N \vdash^{\alpha} \Gamma$
+  has a term controlled derivation where all cut formulas are $\Sigma_1$, then $\Gamma$ is true at $B_{\alpha + 1}(n)$.
+  The definition of ``true at'' is extended to include atoms $m : N$ by saying that $m : N$
+  is true at $k$ if $m < k$.
+\end{lemma}
+
 \section{${\bf RCA}_0$}
 
 \section{${\bf WKL}_0$}
