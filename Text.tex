@@ -2024,7 +2024,35 @@ Let $\beta, \beta' \in \alpha[n]$, then:
 \end{definition}
 
 At successor stages $B_{\alpha}$ is composed with itself once, comparison with the fast-growing 
-$F_{\alpha}$ shows that $B_{\alpha}(n) \leq F_{\alpha}(n)$
+$F_{\alpha}$ shows that $B_{\alpha}(n) \leq F_{\alpha}(n)$ for each non-zero $n$. One can also
+observe that every primitive recursive function is bounded by $B_{\omega \cdot k}$ for some $k$.
+Just as for $H_{\alpha}$ and $F_{\alpha}$, $B_{\alpha}$ is strictly increasing and 
+$B_{\beta}(n) < B_{\alpha}(n)$ whenever $\beta \in \alpha[n]$.
+
+\begin{lemma}
+  $m \leq B_{\alpha}(n)$ if and only if $n : N \vdash^{\alpha} m : N$
+  is derivable by using the first two rules only.
+\end{lemma}
+
+\begin{proof}
+  $ $
+
+  \begin{enumerate}
+    \item The ``if'' part: First of all, if $m \leq n + 1$, then we clearly have $m \geq B_{\alpha}(n)$.
+    Secondly, if $n : N \vdash^{\alpha} m : N$ arises by the second rule from premises $n : N \vdash^{\beta} n' : N$
+    and $n' : N \vdash^{\beta'} m : N$ where $\beta, \beta' \in \alpha[n]$ then, assuming inductively
+    that $m \leq B_{\beta'}(n')$ and $n' \leq B_{\beta}(n)$. We have $m \leq B_{\beta'}(B_{\beta}(n))$
+    and hence $m \leq B_{\alpha}(n)$.
+    \item The ``only if'' part: proceed by induction on $\alpha$ and assume that $m \leq B_{\alpha}(n)$.
+    If $\alpha = 0$ then $m \leq n + 1$ and thus $n : N \vdash^{\alpha} m : N$ by the first axiom.
+    Assume $\alpha = \beta + 1$, then $m \leq B_{\beta}(n')$ where $n' = B_{\beta}(n)$, so by the induction
+    hypothesis $n : N \vdash^{\beta} n' : N$ and $n' : N \vdash^{\beta} m : N$. And thus 
+    $n : N \vdash^{\beta} m : N$ as far as $\beta \in \alpha[n]$.
+    If $\alpha$ is limit, then $m \leq B_{\alpha(n)}$ and so $n : N \vdash^{\alpha(n)} m : N$
+    by the induction hypothesis. As far as $\alpha[n] = \alpha(n)[n]$, the ordinal bounds $\beta$
+    on the premises of the last derivation also lie in $\alpha[n]$, so $n : N \vdash^{\alpha} m : N$.
+  \end{enumerate}
+\end{proof}
 
 \section{${\bf RCA}_0$}
 
