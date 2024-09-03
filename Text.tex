@@ -1961,6 +1961,7 @@ The system is axiomatised with the following inference rules:
 \begin{prooftree}
   \AxiomC{$\alpha < \varepsilon_0$}
   \AxiomC{$m \leq n + 1$}
+  \RightLabel{$N1$}
   \BinaryInfC{$n : N \vdash^{\alpha} \Gamma, m : N$}
 \end{prooftree}
 
@@ -1968,6 +1969,7 @@ Let $\beta, \beta' \in \alpha[n]$:
 \begin{prooftree}
   \AxiomC{$n : N \vdash^{\beta} n' : N$}
   \AxiomC{$n' : N \vdash^{\beta'}$}
+  \RightLabel{$N2$}
   \BinaryInfC{$n : N \vdash^{\alpha} \Gamma$}
 \end{prooftree}
 
@@ -2066,6 +2068,47 @@ $B_{\beta}(n) < B_{\alpha}(n)$ whenever $\beta \in \alpha[n]$.
   The definition of ``true at'' is extended to include atoms $m : N$ by saying that $m : N$
   is true at $k$ if $m < k$.
 \end{lemma}
+
+\begin{proof}
+  Induction over $\alpha$ according to the generation of the sequent $n : N \vdash^{\alpha} \Gamma$ which we will denote by $S$ below.
+
+  \begin{enumerate}
+    \item If $S$ is either a logical axiom or $N1$, then $\Gamma$ contains either a true atomic (in)equation or else an atom $m : N$
+    where $m < n + 2$, so $\Gamma$ is true at $B_{\alpha + 1}(n)$.
+    \item If $S$ is obtained by the N2 tule from $n : N \vdash^{\beta} n' : N$ and $n' : N \vdash^{\beta'} \vdash \Gamma$ for 
+    $\beta, \beta' \in \alpha[n]$. By the induction hypothesis, $\Gamma$ is true at $B_{\beta' + 1}(n')$ 
+    where $n' < B_{\beta + 1}(n)$. By persistence, $\Gamma$ is true at $B_{\beta' + 1}(B_{\beta + 1}(n))$, but we have
+    \begin{center}
+      $B_{\beta' + 1}(B_{\beta + 1}(n)) \leq B_{\alpha}(B_{\alpha (n)}) = B_{\alpha + 1}(n)$.
+    \end{center}
+    Thus $\Gamma$ is true at $B_{\alpha + 1}(n)$.
+    \item The cases of $\land$ and $\lor$ are trivial.
+    \item Note that $\forall$-rule can be applied in the case when we have $\Gamma = \Gamma', \forall x(x < t \to A(x))$,
+    where $t$ is a closed term and $A(x)$ is a $\Delta_0(\operatorname{exp})$-formula. Assume that $S$ arises by the $\forall$-rule
+    from the premises $\max(n, i) : N \vdash^{\beta_i} \Gamma', i \not < t \lor A(i)$ for $\beta_i \in \alpha[\max(n, i)]$ for each $i < \omega$.
+    The derivation is term controlled, so the value of $t$ is less than or equal to $B_{\alpha}(n)$.
+    By the induction hypothesis and persistence, for every $i < t$, the set $\Gamma'$, $A(i)$ is true at 
+    $B_{\beta_i + 1}(B_{\alpha}(n))$. We have $\beta_i \in \alpha[B_{\alpha}(n)]$, so
+    \begin{center}
+    $B_{\beta_i + 1}(B_{\alpha(n)}) \leq B_{\alpha}(B_{\alpha}(n)) = B_{\alpha + 1}(n)$
+    \end{center}
+    So $\Gamma$ is true $B_{\alpha + 1}(n)$ by the persistence property.
+    \item Assume $\Gamma$ contains a $\Sigma_1$-formulas $\exists x A(x)$ and $S$ arises by the $\exists$-rule
+    from premises $n : N \vdash^{\beta} m : N$ and $n : N \vdash^{\beta'} \Gamma', A(m)$, then
+    by the induction hypothesis $\Gamma, A(m)$ is true at $B_{\beta' + 1}(n)$ where $m < B_{\beta + 1}(n)$.
+    Therefore, $\Gamma, A(m)$ is true at any number greater than $B_{\beta + 1}(n)$ and $B_{\beta' + 1}(n)$.
+    As far as $\beta, \beta' \in \alpha[n]$ and both of them are less than $B_{\alpha + 1}(n)$, so $\Gamma$ is true at $B_{\alpha + 1}(n)$.
+    \item Suppose $S$ is obtained by a cut on the $\Sigma_1$-formula $C := \exists \vec{x} D(\vec{x})$, where $D(\vec{x})$ 
+    is a $\Delta(\operatorname{exp})$. So the premises are $n : N \vdash^{\beta} \Gamma, C$ and $n : N \vdash^{\beta'} \Gamma, \neq C$
+    for $\beta, \beta' \in \alpha[n]$. We apply the induction hypothesis to the first premise to obtain numbers
+    $\vec{m} < B_{\beta + 1}(n)$ such that $\Gamma, D(\vec{m})$ is true at $B_{\beta + 1}(n)$.
+    From the second premise one can see, by induction on $\beta'$, that the universal quantifiers in 
+    $\neg C := \forall \vec{x} \neg D(\vec{x})$ may be instantiated at $\vec{m}$ to give 
+    $\max(n, \vec{m}) : N \vdash^{\beta'} \Gamma', \neg D(\vec{m})$. By the induction hypothesis we have $\Gamma', \neg D(\vec{m})$
+    true at $B_{\beta' + 1}(\max(n, \vec{m}))$ which is less than $B_{\beta' + 1}(B_{\beta + 1}(n)) \leq B_{\alpha + 1}(n)$.
+    Thus, by persistence, $\Gamma, \Gamma'$ is true at $B_{\alpha + 1}(n)$, for otherwise $D(\vec{m})$ and $\neg D(\vec{m})$.
+  \end{enumerate}
+\end{proof}
 
 \section{${\bf RCA}_0$}
 
