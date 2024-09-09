@@ -2062,7 +2062,7 @@ $B_{\beta}(n) < B_{\alpha}(n)$ whenever $\beta \in \alpha[n]$.
   if every of its sequents is term controlled.
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[Bounding Lemma]~\label{bounding}
   Let $\Gamma$ be a set of $\Sigma_1$-formulas or atoms of the form $m : N$. If $n : N \vdash^{\alpha} \Gamma$
   has a term controlled derivation where all cut formulas are $\Sigma_1$, then $\Gamma$ is true at $B_{\alpha + 1}(n)$.
   The definition of ``true at'' is extended to include atoms $m : N$ by saying that $m : N$
@@ -2107,6 +2107,43 @@ $B_{\beta}(n) < B_{\alpha}(n)$ whenever $\beta \in \alpha[n]$.
     $\max(n, \vec{m}) : N \vdash^{\beta'} \Gamma', \neg D(\vec{m})$. By the induction hypothesis we have $\Gamma', \neg D(\vec{m})$
     true at $B_{\beta' + 1}(\max(n, \vec{m}))$ which is less than $B_{\beta' + 1}(B_{\beta + 1}(n)) \leq B_{\alpha + 1}(n)$.
     Thus, by persistence, $\Gamma, \Gamma'$ is true at $B_{\alpha + 1}(n)$, for otherwise $D(\vec{m})$ and $\neg D(\vec{m})$.
+  \end{enumerate}
+\end{proof}
+
+\subsection{Embedding of ${\bf PA}$}
+
+We shall use Lemma~\ref{bounding} to embed Peano Arithmetic into the infinitary system and reduce
+all the cuts to $\Sigma_1$-form.
+
+\begin{lemma}[Weakening]
+  Let $n : N \vdash^{\alpha} \Gamma$, $n \leq n'$, $\Gamma \subseteq \Gamma'$ and $\alpha[m] \subseteq \alpha'[m]$
+  for every $m \geq n'$, then $n' : N \vdash^{\alpha'} \Gamma'$.
+  If the given derivation of $n : N \vdash^{\alpha} \Gamma$ is term controlled, so will be the derivation $n' : N \vdash^{\alpha'} \Gamma'$
+  whenever every new closed term is suitably bounded.
+\end{lemma}
+
+\begin{proof}
+  Induction on $\alpha$. Note that if $n : N \vdash^{\alpha} \Gamma$ is an axiom, then both
+  $\Gamma$ and $\Gamma'$ contain either a true atom or a declaration $m : N$ for $m \leq n + 1$. 
+  Thus $n' : N \vdash^{\alpha} \Gamma'$.
+  \begin{enumerate}
+    \item If $n : N \vdash^{\alpha} \Gamma$ is obtained by the N2 rule from the premises
+    $n : N \vdash^{\beta} m : N$ and $m : N \vdash^{\beta'} \Gamma$ for 
+    $\beta, \beta' \in \alpha[n]$. By the induction hypothesis applied to each premise, we can increase $n$
+    to $n'$ and $\Gamma$ to $\Gamma'$. But we have $\alpha[n] \subseteq \alpha[n'] \subseteq \alpha'[n']$,
+    so we can apply the N2 rule to yield $n' : N \vdash^{\alpha'} \Gamma'$.
+    \item Assume $n : N \vdash^{\alpha} \Gamma$ is derived from the $\exists$ rule from premises
+    $n : N \vdash^{\beta} m : N$ and $n : N \vdash^{\beta'} \Gamma, A(m)$ where $\exists x A(x) \in \Gamma$
+    and $\beta, \beta' \in \alpha[n]$ then, by applying the induction hypothesis to each premise,
+    we increase $n$ to $n'$ and $\Gamma$ to $\Gamma'$ and we then apply the $\exists$ rule once more.
+    \item Suppose $n : N \vdash^{\alpha} \Gamma$ arises by the $\forall$ rule from premises
+    \begin{center}
+      $\max(n, i) : N \vdash^{\beta_i} \Gamma, A(i)$
+    \end{center}
+    where $\forall x A(x) \in \Gamma$ and $\beta_i \in \alpha[\max(n, i)]$ for every $i$.
+    We then apply the induction hypothesis to each of those premises, so we increase $n$ to $n'$ and $\Gamma$ to $\Gamma'$.
+    So we re-apply the $\forall$ rule to obtain $n' : N \vdash^{\alpha'} \Gamma'$ as far as for each $i$ one has
+    $\beta_i \in \alpha[\max(n', i)] \subseteq \alpha'[\max(n', i)]$.
   \end{enumerate}
 \end{proof}
 
