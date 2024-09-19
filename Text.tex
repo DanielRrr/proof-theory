@@ -2147,6 +2147,91 @@ all the cuts to $\Sigma_1$-form.
   \end{enumerate}
 \end{proof}
 
+\begin{theorem}
+  Suppose ${\bf PA} \vdash \Gamma(x_1, \ldots, x_k)$. Then there is a fixed number $d < \omega$
+  such that for all numerical instantiations $n_1, \ldots, n_k$ of the free variables, we have a term controlled
+  derivation of
+  \begin{center}
+    $\max(n_1, \ldots, n_k) : N \vdash^{\omega \cdot d} \Gamma(n_1, \ldots, n_k)$.
+  \end{center}
+\end{theorem}
+
+\begin{proof}
+  We work in a Tait-style axiomatisation of ${\bf PA}$, where the induction scheme is replaced with
+  by the rule:
+  \begin{prooftree}
+    \AxiomC{$\Gamma, A(0)$}
+    \AxiomC{$\Gamma, \neg A(z), A(z + 1)$}
+    \BinaryInfC{$\Gamma, A(t)$}
+  \end{prooftree}
+  where $z$ is not free in $\Gamma$ and $t$ is any term.
+  As earlier, we assume that the ${\bf PA}$ proof of $\Gamma(\vec{x})$ is cut-free and
+  the non-atomic cut formulas are the induction formulas.
+  \begin{enumerate}
+    \item If $\Gamma(\vec{x})$ is an axiom of ${\bf PA}$, then, given the substitution $\vec{x} := \vec{n}$, 
+    there must be a true atom in $\Gamma(\vec{n})$. So we have a derivation of 
+    $\max(\vec{n}) : N \vdash^{\alpha} \Gamma(\vec{n})$ for arbitrary $\alpha$.
+
+    However, one needs to choose $\alpha$ properly in order to make the derivation term-controlled.
+    But there should be a number $d$ such that for all $\vec{n}$, $B_{\omega \cdot d}(\max \vec{n})$
+    bounds the value of every $t(\vec{n})$. So we choose $\alpha := \omega \cdot d$.
+    \item If $\Gamma(\vec{x})$ arises by the $\wedge$, $\lor$ or Cut rule from the premises
+    $\Gamma_0(\vec{x})$ and $\Gamma_1(\vec{x})$. By the induction hypothesis, we assume that there
+    are infinitary derivations of $\max \vec{n} : N \vdash^{\omega \cdot d_0} \Gamma_0(\vec{n})$
+    and $\max \vec{n} : N \vdash^{\omega \cdot d_1} \Gamma_1(\vec{n})$
+    where $d_0$ and $d_1$ are some natural numbers that do not depend on $\vec{n}$.
+    Choose $d := \max(d_0, d_1) + 1$ and observe that $\omega \cdot d_0, \omega \cdot d_1 \in \omega \cdot d[\max \vec{n}]$.
+    Then we apply the relevant infinitary rule and obtain $\max \vec{n} : N \vdash^{\omega \cdot d} \Gamma(\vec{n})$
+    and the corresponding derivation is term controlled as well.
+    \item Suppose $\Gamma(\vec{x})$ is obtained by applying the $\forall$ rule from the premises
+    $\Gamma_0(\vec{x}), A(\vec{x}, z)$, so $\Gamma(\vec{x})$ has the form $\Gamma_0(\vec{x}), \forall z A(\vec{x}, z)$.
+    Assume we have some $d_0$ such that for all $\vec{n}$ and for all $m$ there exists a term controlled derivation
+    of $\max(\vec{n}, m) : N \vdash^{\omega \cdot d_0} \Gamma_0(\vec{n}), A(\vec{n}, m)$.
+    Then we put $d = d_0 + 1$, so we have $\omega \cdot d_0 \in \omega \cdot d[\max(\vec{n}, m)]$.
+    Then we apply the infinitary $\forall$ rule and then we obtain 
+    $\max \vec{n} : N \vdash^{\omega \cdot d} \Gamma(\vec{n})$, which is also term controlled.
+    \item The case of existential quantifiers is considered similarly to $\forall$.
+    \item Finally, suppose $\Gamma(\vec{x}) = \Gamma_0(\vec{x}), A(\vec{x}, t(\vec{x}))$
+    is obtained from $\Gamma_0(\vec{x}), A(\vec{x}, 0)$ and
+    $\Gamma(\vec{x}), \neg A(\vec{x}, z), A(\vec{x}, z + 1)$. By the induction hypothesis
+    there are $d_0$ and $d_1$ such that for all $\vec{n}$ and for all $i$ we have term controlled derivations of
+
+    \begin{center}
+      $\max \vec{n} : N \vdash^{\omega \cdot d_0} \Gamma_0(\vec{n}), A(\vec{n}, 0)$
+
+      $\max(\vec{n}, i) : N \vdash^{\omega \cdot d_1} \Gamma_0(\vec{n}), \neg A(\vec{n}, i), A(\vec{n}, i + 1)$.
+    \end{center}
+  Now let $d_2$ be a number bigger than $\max(d_0, d_1)$ such that $B_{\omega \cdot d_2}$ bounds
+  every subterm of $t(\vec{x})$. Then for all $\vec{n}$, if $m$ is the numerical value of the term $t(\vec{n})$
+  we have a term controlled derivation of
+  \begin{center}
+    $\max(\vec{n}, m) : N \vdash^{\omega \cdot (d_2 + 1)} \Gamma_0(\vec{n}), A(\vec{n}, m)$.
+  \end{center}
+  If $m = 0$ this follows from the first premise above by weakening the ordinal bound.
+
+  If $m > 0$, then by successive cuts on $A(\vec{n}, i)$ for $i < m$ with probably weakenings, we obtain
+  a term controlled derivation of
+  \begin{center}
+    $\max(\vec{n}, m) : N \vdash^{\omega \cdot d_2 + m} \Gamma(\vec{n}), A(\vec{n}, m)$.
+  \end{center}
+  As far as $m \in \omega[\max(\vec{n}, m)]$ we have the ordinal bound $\omega \cdot (d_2 + 1)$.
+  Since by our choice $d_2$, $\max(\vec{n}, m) \leq B_{\omega \cdot d_2}(\max \vec{n})$
+  we also have
+  \begin{center}
+    $\max \vec{n} : N \vdash^{\omega \cdot d_2} \max(\vec{n}, m) : N$
+  \end{center}
+  and then we obtain
+  \begin{center}
+    $\max \vec{n} : N \vdash^{\omega \cdot (d_2 + 2)} \Gamma_0(\vec{n}), A(\vec{n}, m)$.
+  \end{center}
+
+  So we replace the numeral $m$ by the term $t(\vec{n})$. Finally we have a term controlled derivation of
+  \begin{center}
+    $\max \vec{n} : N \vdash^{\omega \cdot d} \Gamma_0(\vec{n}), A(\vec{n}, t(\vec{n}))$.
+  \end{center}
+  \end{enumerate}
+\end{proof}
+
 \section{${\bf RCA}_0$}
 
 \section{${\bf WKL}_0$}
