@@ -2232,6 +2232,29 @@ all the cuts to $\Sigma_1$-form.
   \end{enumerate}
 \end{proof}
 
+\subsection{Cut Elimination}
+
+\begin{lemma}[$\forall$-inversion] If $n : N \vdash^{\alpha} \Gamma, \forall a A(a)$,
+  then for each $m < \omega$ we have $\max(n, m) : N \vdash^{\alpha} \Gamma, A(m)$.
+\end{lemma}
+
+\begin{proof}
+  Let us proceed by induction on $\alpha$.
+
+  If the sequent $n : N \vdash^{\alpha} \Gamma, \forall a A(a)$ is an axiom, so is 
+  $n : N \vdash^{\alpha} \vdash^{\alpha} \Gamma$, then the result is obtained by the weakening rule.
+
+  Suppose $n : N \vdash^{\alpha} \Gamma, \forall a A(a)$ is the consequence of the $\forall$-rule
+  with $\forall a A(a)$. Then the premises are, for each $i < \omega$,
+  \begin{center}
+    $\max(n, i) : N \vdash^{\beta_i} \Gamma, A(i), \forall a A(a)$
+  \end{center}
+  where $\beta_i \in \alpha[\max(n, i)]$.
+  So by applying the induction hypothesis, we obtain $\max(n, m) : N \vdash^{\beta_m} \Gamma, A(m)$.
+  By the weakening rule, we obtain $\max(n,m) : N \vdash^{\alpha} \Gamma, A(m)$.
+  The rest is simple.
+\end{proof}
+
 \section{${\bf RCA}_0$}
 
 \section{${\bf WKL}_0$}
